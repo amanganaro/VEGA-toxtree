@@ -19,6 +19,11 @@ import insilico.toxtree.core.DescriptorRangeRule;
 import insilico.toxtree.core.ElementsRule;
 import insilico.toxtree.core.SmartsRule;
 import insilico.toxtree.core.UnimplementedRule;
+import insilico.toxtree.chem.FunctionalGroup;
+import insilico.toxtree.verhaar.rules.CoverageRule;
+import insilico.toxtree.verhaar.rules.RingHalogenRule;
+import insilico.toxtree.verhaar.rules.RingSubstituentRule;
+import insilico.toxtree.verhaar.rules.Rule141;
 import insilico.toxtree.verhaar.rules.Rule11;
 import insilico.toxtree.verhaar.rules.RuleIonicGroups;
 import insilico.toxtree.verhaar.rules.Rule152;
@@ -27,6 +32,8 @@ import insilico.toxtree.verhaar.rules.Rule24;
 import org.openscience.cdk.qsar.descriptors.molecular.WeightDescriptor;
 import org.openscience.cdk.qsar.descriptors.molecular.XLogPDescriptor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -126,27 +133,42 @@ public final class VerhaarTree extends DecisionTree {
                 elements("1.3", "Contain only C&H", ElementsRule.Mode.EXACTLY, "C", "H"),
                 elements("1.4", "Contain only C,H and halogen", ElementsRule.Mode.EXACTLY,
                         "C", "H", "F", "Br", "I", "Cl"),
-                new UnimplementedRule("1.4.1", "Be acyclic and not have halogens at beta from unsaturation"),
-                new UnimplementedRule("1.4.2", "Be monocyclic with allowed ring substituents"),
-                new UnimplementedRule("1.4.3", "Be monocyclic with allowed substituents"),
-                new UnimplementedRule("1.4.4", "Be polycyclic with allowed substituents"),
+                new Rule141(),
+                new CoverageRule("1.4.2", "Be monocyclic compounds substituted with halogens",
+                        ctx -> ctx.explicitFlags().getRingCount() == 1, ringSubstitutedHalogens()),
+                new RingHalogenRule("1.4.3", "Be monocyclic compounds that are unsubstituted or substituted "
+                        + "with acyclic structures containing only C&H or complying with rule 1.4.1", false),
+                new RingHalogenRule("1.4.4", "Be polycyclic compounds that are unsubstituted or substituted "
+                        + "with acyclic structures containing only C&H or complying with rule 1.4.1", true),
                 elements("1.5", "Contain C,H & O", ElementsRule.Mode.EXACTLY, "C", "H", "O"),
                 rule151,
                 rule152,
                 rule153,
                 rule154,
                 elements("1.6", "Contain only C,H,N", ElementsRule.Mode.EXACTLY, "C", "H", "N"),
-                new UnimplementedRule("1.6.1", "Be aliphatic secondary or tertiary amines"),
+                new CoverageRule("1.6.1", "Be aliphatic secondary or tertiary amines",
+                        ctx -> ctx.flags().isAliphatic(), List.of(
+                        // A nitrogen with two non-ring carbons and a hydrogen, or with three non-hydrogen
+                        // neighbours.
+                        new FunctionalGroup("amine", "[#6]-!@[#7](-!@[#6])-[#1]"),
+                        new FunctionalGroup("amine", "[!#1]-[#7](-[!#1])-[!#1]"))),
                 elements("1.7", "Contain only C,H,O and halogen", ElementsRule.Mode.EXACTLY,
                         "C", "H", "O", "Cl", "Br", "I", "F"),
                 new Rule171(rule151, rule152, rule153, rule154),
 
                 // Class 2: less inert compounds.
-                new UnimplementedRule("2.1", "Be phenols with allowed substituents"),
-                new UnimplementedRule("2.2", "Be anilines with allowed substituents"),
-                new UnimplementedRule("2.3", "Be mononitroaromatics with allowed substituents"),
+                new RingSubstituentRule("2.1", "Be non- or weakly acidic phenols",
+                        RingSubstituentRule.PHENOL, "Cl,Br,F", 3, 1, false, false),
+                new RingSubstituentRule("2.2",
+                        "Be anilines with one nitro substituent and/or one to three chlorine substituents, and/or alkyl substituents",
+                        RingSubstituentRule.ANILINE, "Cl", 3, 1, false, false),
+                new RingSubstituentRule("2.3",
+                        "Be mononitroaromatics with one or two chlorine substituents and/or alkyl substituents",
+                        null, "Cl,Br", 2, 1, true, true),
                 new Rule24(),
-                new UnimplementedRule("2.5", "Be pyridines with allowed substituents"),
+                new RingSubstituentRule("2.5",
+                        "Be pyridines with one or two chlorine substituents and/or alkyl substituents",
+                        RingSubstituentRule.PYRIDINE, "Cl", 2, 0, false, false),
 
                 // Class 3: unspecific reactivity.
                 smartsAny("3.1", "Possess alylic/propargylic activation",
@@ -223,6 +245,16 @@ public final class VerhaarTree extends DecisionTree {
                         "P(O)(O)(S)(=S)",
                         "P(O)(C)(S)(=S)"),
         };
+    }
+
+    /** The halogen-on-a-ring-carbon groups of rule 1.4.2: the ring atoms around it are context, not the group. */
+    private static List<FunctionalGroup> ringSubstitutedHalogens() {
+        List<FunctionalGroup> groups = new ArrayList<>();
+        for (String halogen : new String[]{"Cl", "Br", "F", "I"}) {
+            groups.add(new FunctionalGroup("ringSubstituted" + halogen,
+                    "[*]@[#6](@[*])!@[" + halogen + "]", 0, 2));
+        }
+        return groups;
     }
 
     private static DecisionRule elements(String id, String title, ElementsRule.Mode mode, String... elements) {

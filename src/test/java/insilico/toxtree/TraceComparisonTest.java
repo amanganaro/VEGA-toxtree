@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
@@ -42,11 +43,17 @@ class TraceComparisonTest {
     }
 
     @Test
-    void verhaarTraceAgreement() throws Exception {
-        report(new VerhaarTree(), "reference/verhaar-core.tsv");
+    void verhaarReproducesToxtree() throws Exception {
+        Agreement agreement = report(new VerhaarTree(), "reference/verhaar-core.tsv");
+        assertEquals(agreement.compared(), agreement.sameTrace(),
+                "Every decision trace must match the one Toxtree produced");
     }
 
-    private void report(DecisionTree tree, String resource) throws IOException {
+    /** @param compared molecules classified, @param sameTrace how many took the very same path */
+    private record Agreement(int compared, int sameCategory, int sameTrace) {
+    }
+
+    private Agreement report(DecisionTree tree, String resource) throws IOException {
         List<Reference> references = load(resource);
         assertTrue(references.size() > 100, "The reference file looks empty: " + resource);
 
@@ -115,6 +122,7 @@ class TraceComparisonTest {
             });
         }
         System.out.println(out);
+        return new Agreement(usable, sameCategory, sameTrace);
     }
 
     private static double percent(int part, int total) {

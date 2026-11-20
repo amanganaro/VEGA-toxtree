@@ -54,12 +54,11 @@ distingue a colpo d'occhio da uno che risponde male.
 
 | Albero | Regole fatte | Concordanza con Toxtree |
 |---|---|---|
-| Verhaar | 24 su 34 | **100%** su tutte le regole fatte |
+| Verhaar | **34 su 34** | **100%**: 586 molecole su 586, traccia e categoria identiche |
 | Cramer | 0 su 34 | — |
 
-Mancano le 10 regole di Verhaar che richiedono la decomposizione anello/sostituenti (1.4.1-1.4.4, 1.6.1, 2.1, 2.2,
-2.3, 2.5), più tutto Cramer. Lo stesso algoritmo serve a 13 regole fra i due alberi, quindi va scritto una volta
-sola.
+Verhaar è finito. Manca Cramer, che riusa l'impalcatura e in più ha bisogno della simulazione di idrolisi e delle
+liste di strutture in InChI.
 
 ## Verifica
 
@@ -69,6 +68,24 @@ divergono.
 
 I file di riferimento stanno in `src/test/resources/reference` e si rigenerano con il profilo `toxtree-reference`,
 che è l'unico punto in cui serve ancora il Nexus di IdeaConsult.
+
+## Tre particolarità dell'originale, riprodotte apposta
+
+Il porting riproduce il comportamento attuale, non quello che ci si aspetterebbe. Tre punti meritano di essere
+scritti, perché sembrano errori e in parte lo sono:
+
+- **La struttura principale non viene mai richiesta.** Toxtree risponde "sì, è un fenolo debolmente acido" per il
+  tiofene e per la tiirana. `RuleRingMainStrucSubstituents` assegna la struttura principale dentro `initQuery()`,
+  che il costruttore della superclasse chiama, e poi dichiara il campo come `mainStructure = null`: in Java gli
+  inizializzatori di campo girano dopo il costruttore della superclasse, quindi l'assegnazione viene cancellata
+  prima che la regola venga usata. La query sopravvive fra i gruppi ammessi, perché era stata registrata quando il
+  campo la conteneva ancora. Da questo dipendono 18 delle 603 molecole del dataset golden.
+- **Nessun anello, nessuna risposta.** Toxtree registra l'insieme degli anelli solo se ce n'è almeno uno, e le
+  regole di classe 2 si arrendono quando non ne ricevono nessuno. Una molecola aciclica quindi non le soddisfa mai.
+- **I match sovrapposti si scartano, contandoli per legame.** Su un cicloesano esalogenato i match di "alogeno su
+  un carbonio dell'anello" condividono legami dell'anello: sopravvive solo il primo e gli altri alogeni restano
+  scoperti, e per questo Toxtree rifiuta quella molecola. Su un gruppo triclorometile invece i tre match
+  condividono il carbonio ma nessun legame, quindi valgono tutti.
 
 ## Due differenze note rispetto a Toxtree
 

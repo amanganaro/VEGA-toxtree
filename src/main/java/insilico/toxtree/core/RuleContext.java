@@ -33,6 +33,7 @@ public final class RuleContext {
     private final MolFlags flags;
     private final Map<String, Object> cache = new HashMap<>();
     private IAtomContainer explicitHydrogens;
+    private MolFlags explicitFlags;
 
     public RuleContext(IAtomContainer mol) {
         this.molecule = mol;
@@ -55,6 +56,20 @@ public final class RuleContext {
      * The copy is made once per molecule and keeps the aromaticity and ring flags of the original, which is what
      * lets the patterns run without re-preparation.
      */
+    /**
+     * The structural flags of {@link #withExplicitHydrogens()}.
+     * <p>
+     * Rules that take a ring apart need rings perceived on the very molecule they will cut, because the pieces
+     * must share its atom objects. Hydrogens never sit in a ring, so these are the same rings as
+     * {@link #flags()} describes, only expressed over the copy.
+     */
+    public MolFlags explicitFlags() {
+        if (explicitFlags == null) {
+            explicitFlags = Preprocessing.analyse(withExplicitHydrogens());
+        }
+        return explicitFlags;
+    }
+
     public IAtomContainer withExplicitHydrogens() {
         if (explicitHydrogens == null) {
             try {
