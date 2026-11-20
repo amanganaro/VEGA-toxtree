@@ -42,34 +42,47 @@ public final class KetoneAlcoholRule extends AbstractRule {
 
     /** Substances the molecule has to be, not merely contain. */
     private static final String[] SUBSTANCES = {
-            "C=CCO",        // allyl alcohol
-            "SCC=C",        // allyl mercaptan
-            "C=CCSCC=C",    // allyl sulphide
-            "C=CCN",        // allyl amine
-            "C=CC=O",       // acrolein
-            "C=C(C)C=O",    // methacrolein
-            "C=CC(O)=O",    // acrylic acid
-            "C=C(C)C(O)=O", // methacrylic acid
+            "C=CCO",          // allyl alcohol
+            "SCC=C",          // allyl mercaptan
+            "C=CCSCC=C",      // allyl sulphide
+            "C=CCN",          // allyl amine
+            "C=CC=O",         // acrolein
+            "C=C(C)C=O",      // methacrolein
+            "C=C(C)C(OC)OC",  // methacrolein acetal
+            "C=CC(O)=O",      // acrylic acid
+            "C=C(C)C(O)=O",   // methacrylic acid
+            "O=CSCC=C",       // allyl thioester
     };
 
+    /**
+     * Groups the molecule has to contain, taken from the shapes Toxtree actually builds rather than from the
+     * names it gives them. Two are worth pointing out.
+     * <p>
+     * The "secondary alcohol attached to a terminal vinyl" has no vinyl in it: whoever wrote the query out atom
+     * by atom made every bond single, so what it really asks for is a plain secondary alcohol with a two-carbon
+     * tail. Cyclohexanol satisfies it, and a great many alcohols are placed in class II because of it.
+     * <p>
+     * The "sterically hindered" group is not a fully substituted ring either, but a chain of six carbons, which
+     * an aromatic ring provides, with two of them carrying a carbon that has three non-hydrogen neighbours. It
+     * catches 2,6-di-tert-butylphenol and leaves hexamethylbenzene alone.
+     */
     private static final String[] GROUPS = {
             // vicinal diketone
             "[#8]=[#6](-[!#8;!#16])-[#6](=[#8])-[!#8;!#16]",
-            // ketone, ketal, secondary alcohol or its ester, on a terminal vinyl
+            // ketone and ketal on a terminal vinyl
             "[!#8;!#16;!#7]-[#6](=[#8])-[#6]([#1])=[#6]([#1])[#1]",
-            "[!#8;!#1]-[#8]-[#6](-[#8]-[!#8;!#1])(-[!#8;!#1])-[#6]=[#6]",
-            "[#1]-[#8]-[#6]([#1])(-[#6])-[#6]([#1])=[#6]([#1])[#1]",
+            "[!#8;!#1]-[#6](-[#8]-[!#8;!#1])(-[#8]-[!#8;!#1])-[#6]=[#6]([#1])[#1]",
+            // the misnamed secondary alcohol, and the ester of it
+            "[#1]-[#8]-[#6](-[#1])(-[#6])-[#6](-[#1])-[#6](-[#1])-[#1]",
             "[#6]-[#6](-[#6](=[#8])-[#8]-[#6])-[#6]=[#6]",
             // allyl alcohol as an acetal or an ester
-            "[#6](-[#8]-[#6]-[#6]=[#6])(-[#8]-[#6]-[#6]=[#6])[#1]",
+            "[#6](-[#8]-[#6]-[#6]=[#6])(-[#8]-[#6]-[#6]=[#6])-[#1]",
             "[#8]=[#6](-[#6])-[#8]-[#6]([#1])([#1])-[#6]([#1])=[#6]([#1])[#1]",
-            // allyl thioester
-            "[#6](=[#8])-[#16]-[#6]-[#6]=[#6]",
-            // methacrolein acetal
-            "[#6]=[#6](-[#6])-[#6]([#1])(-[#8]-[#6])-[#8]-[#6]",
-            // a ring whose every carbon carries something other than hydrogen
-            "[#6]1(-[!#1])~[#6](-[!#1])~[#6](-[!#1])~[#6](-[!#1])~[#6](-[!#1])~[#6]1-[!#1]",
     };
+
+    /** Checked after everything else, as in the original. */
+    private static final String STERICALLY_HINDERED =
+            "[#6]~[#6]~[#6](-[#6](-[!#1])(-[!#1])-[!#1])~[#6](~[!#1])~[#6](-[#6](-[!#1])(-[!#1])-[!#1])~[#6]";
 
     /** An open-chain ketone or ketal with at least four carbons on one side. */
     private static final String KETONE_4 = "[#6]-[#6]-[#6]-[#6]-[#6](=[#8])-[#6]";
@@ -84,7 +97,10 @@ public final class KetoneAlcoholRule extends AbstractRule {
 
     @Override
     public boolean verify(IAtomContainer mol, RuleContext ctx) {
-        IAtomContainer target = ctx.kekule();
+        // Aromaticity is kept here, unlike in the questions about bond order. Every double bond these patterns
+        // ask for is a real vinyl: read on a Kekule view an aromatic ring would stand in for one, and an ester
+        // of a benzylic acid would pass as an ester of an allylic alcohol.
+        IAtomContainer target = ctx.withExplicitHydrogens();
 
         if (Smarts.matchesAny(target, GROUPS)) {
             return true;
@@ -96,7 +112,7 @@ public final class KetoneAlcoholRule extends AbstractRule {
             return true;
         }
         if (!ctx.flags().isAliphatic()) {
-            return false;
+            return Smarts.matches(target, STERICALLY_HINDERED);
         }
 
         // Open chain: a long ketone or ketal is enough, on its own or with an alcohol.
@@ -117,9 +133,11 @@ public final class KetoneAlcoholRule extends AbstractRule {
         }
         if (Smarts.matches(target, KETAL_4)) {
             GroupAllocation alone = GroupAllocation.of(target, List.of(ketal));
-            return alone.onlyTheseGroups(target, List.of(ketal.id()));
+            if (alone.onlyTheseGroups(target, List.of(ketal.id()))) {
+                return true;
+            }
         }
-        return false;
+        return Smarts.matches(target, STERICALLY_HINDERED);
     }
 
     private boolean isOneOfTheNamedSubstances(IAtomContainer mol) {

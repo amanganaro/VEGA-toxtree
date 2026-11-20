@@ -70,6 +70,14 @@ class TraceComparisonTest {
                 "Traces that differ: " + (agreement.compared() - agreement.sameTrace()));
     }
 
+    @Test
+    void onTheLogPSet() throws Exception {
+        // A far larger external set, the logP training set, run through the released VEGA 1.2.4 by Alberto.
+        // This is where the port is really measured: the golden dataset is too small to exercise every rule.
+        report(new VerhaarTree(), "reference/verhaar-logp.tsv");
+        report(new CramerTree(), "reference/cramer-logp.tsv");
+    }
+
     /** @param compared molecules classified, @param sameTrace how many took the very same path */
     private record Agreement(int compared, int sameCategory, int sameTrace) {
     }

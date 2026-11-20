@@ -43,9 +43,16 @@ public final class CommonTerpeneRule extends AbstractRule {
     private static final String ALDEHYDE = "aldehyde";
     private static final String ACID = "acid";
 
-    /** Five carbons: a chain of three whose middle atom carries a branch, the chain bonds single or double. */
+    /**
+     * Five carbons: a chain of four whose second atom carries a branch, every bond single.
+     * <p>
+     * Single, although the group is named after isoprene and isoprene has two double bonds. Toxtree's query is
+     * built from a bond type that claims to accept single or double and in practice accepts only single, so
+     * isoprene itself does not satisfy it and a terpene is recognised only through its saturated parts.
+     * Geraniol is not a common terpene to Toxtree, while citronellol is.
+     */
     private static final FunctionalGroup ISOPRENE_UNIT =
-            FunctionalGroup.overlapping(ISOPRENE, "[#6]-,=[#6](-[#6])-,=[#6]-,=[#6]");
+            FunctionalGroup.overlapping(ISOPRENE, "[#6]-[#6](-[#6])-[#6]-[#6]");
 
     private static final List<FunctionalGroup> OXYGEN_GROUPS = List.of(
             FunctionalGroup.overlapping(ALCOHOL, Smarts.CHN + "-[#8]-[#1]", 0),
