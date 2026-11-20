@@ -13,7 +13,9 @@ package insilico.toxtree.core;
 
 import insilico.toxtree.chem.MolFlags;
 import insilico.toxtree.chem.Preprocessing;
+import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
+import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.util.HashMap;
@@ -34,6 +36,7 @@ public final class RuleContext {
     private final Map<String, Object> cache = new HashMap<>();
     private IAtomContainer explicitHydrogens;
     private MolFlags explicitFlags;
+    private IAtomContainer kekule;
 
     public RuleContext(IAtomContainer mol) {
         this.molecule = mol;
@@ -68,6 +71,34 @@ public final class RuleContext {
             explicitFlags = Preprocessing.analyse(withExplicitHydrogens());
         }
         return explicitFlags;
+    }
+
+    /**
+     * The molecule with explicit hydrogens and the aromatic flags cleared, so that bond orders are read the way
+     * Toxtree reads them.
+     * <p>
+     * Many of Toxtree's functional groups are built from bonds that ask only for an order, single or double,
+     * and take no notice of whether the bond is aromatic. SMARTS is stricter: {@code -} does not match an
+     * aromatic bond. Pyridinium is the case that shows it, where Toxtree finds a quaternary nitrogen by reading
+     * the Kekulé orders of the ring. Clearing the flags reproduces that reading exactly, and it must not be
+     * used for patterns that ask about aromaticity.
+     */
+    public IAtomContainer kekule() {
+        if (kekule == null) {
+            try {
+                IAtomContainer copy = withExplicitHydrogens().clone();
+                for (IAtom atom : copy.atoms()) {
+                    atom.setIsAromatic(false);
+                }
+                for (IBond bond : copy.bonds()) {
+                    bond.setIsAromatic(false);
+                }
+                kekule = copy;
+            } catch (CloneNotSupportedException x) {
+                kekule = withExplicitHydrogens();
+            }
+        }
+        return kekule;
     }
 
     public IAtomContainer withExplicitHydrogens() {

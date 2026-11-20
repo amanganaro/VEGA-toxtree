@@ -21,6 +21,7 @@ import insilico.toxtree.core.UnimplementedRule;
 import insilico.toxtree.cramer.rules.ElementsOtherThanRule;
 import insilico.toxtree.cramer.rules.RingRules;
 import insilico.toxtree.cramer.rules.StructureListRule;
+import insilico.toxtree.cramer.rules.ToxicFunctionalGroupsRule;
 
 /**
  * The Cramer decision tree, which sorts substances into three classes of presumed toxic hazard.
@@ -92,7 +93,7 @@ public final class CramerTree extends DecisionTree {
     private static DecisionRule[] buildRules() {
         return new DecisionRule[]{
                 StructureListRule.normalBodyConstituent(),
-                new UnimplementedRule("2", "Contains functional groups associated with enhanced toxicity"),
+                new ToxicFunctionalGroupsRule(),
                 new ElementsOtherThanRule(),
                 new UnimplementedRule("4", "Contains only salts, sulphonates or sulphates"),
                 new UnimplementedRule("5", "Simply branched aliphatic hydrocarbon"),

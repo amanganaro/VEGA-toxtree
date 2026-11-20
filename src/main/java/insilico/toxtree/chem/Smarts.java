@@ -30,6 +30,16 @@ public final class Smarts {
 
     private static final Map<String, SmartsPattern> CACHE = new ConcurrentHashMap<>();
 
+    /**
+     * A carbon as Toxtree's {@code markCHn} recognises one: either it bears at least one hydrogen, or it bears
+     * none and every neighbour it has is a carbon.
+     * <p>
+     * Several of Toxtree's groups are built from this kind of atom rather than from a plain carbon, and the
+     * difference decides real cases: the carbonyl carbon of an amide is not one, so a urea nitrogen is not an
+     * aliphatic secondary amine.
+     */
+    public static final String CHN = "[$([#6]~[#1]),$([#6;!$([#6]~[!#6])])]";
+
     private Smarts() {
     }
 
