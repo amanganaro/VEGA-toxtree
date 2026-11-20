@@ -23,6 +23,7 @@ import insilico.toxtree.cramer.rules.CommonTerpeneRule;
 import insilico.toxtree.cramer.rules.ElementsOtherThanRule;
 import insilico.toxtree.cramer.rules.HeterocyclicComplexSubstituentsRule;
 import insilico.toxtree.cramer.rules.HydrolysisRules;
+import insilico.toxtree.cramer.rules.KetoneAlcoholRule;
 import insilico.toxtree.cramer.rules.LactoneRule;
 import insilico.toxtree.cramer.rules.ManyFunctionalGroupsRule;
 import insilico.toxtree.cramer.rules.MonocarbocyclicRule;
@@ -119,7 +120,7 @@ public final class CramerTree extends DecisionTree {
                 HydrolysisRules.toMononuclearResidues("15"),
                 new CommonTerpeneRule("16"),
                 HydrolysisRules.toCommonTerpene("17"),
-                new UnimplementedRule("18", "Ketone, alcohol, acid or ester"),
+                new KetoneAlcoholRule(),
                 new FlagRule("19", "Open chain", MolFlags::isOpenChain),
                 new AliphaticWithFunctionalGroupsRule(),
                 new ManyFunctionalGroupsRule(),
