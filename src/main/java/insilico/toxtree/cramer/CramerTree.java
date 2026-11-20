@@ -22,6 +22,7 @@ import insilico.toxtree.cramer.rules.CommonTerpeneRule;
 import insilico.toxtree.cramer.rules.ElementsOtherThanRule;
 import insilico.toxtree.cramer.rules.HydrolysisRules;
 import insilico.toxtree.cramer.rules.RingRules;
+import insilico.toxtree.cramer.rules.SaltOrSulphonateRule;
 import insilico.toxtree.cramer.rules.SimplyBranchedOrCarbohydrateRule;
 import insilico.toxtree.cramer.rules.StructureListRule;
 import insilico.toxtree.cramer.rules.ToxicFunctionalGroupsRule;
@@ -98,7 +99,7 @@ public final class CramerTree extends DecisionTree {
                 StructureListRule.normalBodyConstituent(),
                 new ToxicFunctionalGroupsRule(),
                 new ElementsOtherThanRule(),
-                new UnimplementedRule("4", "Contains only salts, sulphonates or sulphates"),
+                new SaltOrSulphonateRule(),
                 new SimplyBranchedOrCarbohydrateRule(),
                 new UnimplementedRule("6", "Common benzene derivative"),
                 new FlagRule("7", "Heterocyclic", MolFlags::isHeterocyclic),
