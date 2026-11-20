@@ -31,14 +31,24 @@ import java.util.Set;
 
 /**
  * Cramer question 6: a benzene derivative bearing only hydrocarbon chains, hydroxy or hydroxy-ester chains, and
- * alkoxy groups, with at least one alkoxy para to a chain.
+ * alkoxy groups, with at least one alkoxy para to a chain. It is the question that was meant to put safrole and
+ * myristicin in the high class.
  * <p>
- * This is the question that puts safrole and myristicin in the high class. It needs the ring positions, not just
- * the substituents, so the six carbons are put in their cyclic order and each substituent is recorded at the
- * position or positions it attaches to. A methylenedioxy bridge occupies two of them, which is how safrole is
- * caught.
- */
-public final class BenzeneDerivativeRule extends AbstractRule {
+<b>This question can never be answered yes, and that is reproduced on purpose.</b>
+ * <p>
+ * Both this question and question 30 ask Toxtree to consider only the aromatic rings, through
+ * {@code setAnalyzeAromatic(true)} together with {@code setAnalyzeOnlyRingsWithFlagSet(true)}. The selection
+ * that follows never matches: the rule stores the aromatic flag as if it were a bit mask, then tests it against
+ * loop indices that are ring flag positions, and the two never line up. No ring is ever selected, the loop over
+ * substituents never runs, and the answer is no whatever the molecule.
+ * <p>
+ * It is demonstrable rather than inferred. Anethole and estragole, an alkoxy group para to a hydrocarbon chain,
+ * are precisely what this question describes, and Toxtree answers no to both; across the 603 molecules of the
+ * golden dataset the question is asked 243 times and answered no every time, as is question 30 for its 25.
+ * <p>
+ * The intended logic is kept below and can be switched on by {@link #SELECT_AROMATIC_RINGS}, so that whoever
+ * decides to correct this can see what the question was meant to do and what it would change.
+ */public final class BenzeneDerivativeRule extends AbstractRule {
 
     private static final String HYDROXY1 = "hydroxy1";
     private static final String ETHER = "ether";
@@ -61,8 +71,14 @@ public final class BenzeneDerivativeRule extends AbstractRule {
         super("6", "Benzene derivative with certain substituents");
     }
 
+    /** Whether the aromatic rings are selected at all. False reproduces Toxtree; see the class comment. */
+    private static final boolean SELECT_AROMATIC_RINGS = false;
+
     @Override
     public boolean verify(IAtomContainer mol, RuleContext ctx) {
+        if (!SELECT_AROMATIC_RINGS) {
+            return false;
+        }
         IAtomContainer ring = singleBenzeneRing(ctx);
         if (ring == null) {
             return false;

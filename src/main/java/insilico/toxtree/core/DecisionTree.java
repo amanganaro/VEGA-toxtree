@@ -87,11 +87,15 @@ public abstract class DecisionTree {
             try {
                 answer = rule.isImplemented() && rule.verify(mol, ctx);
             } catch (Exception | StackOverflowError x) {
-                trace.add(rule.getId() + "?");
+                if (rule.appearsInTrace()) {
+                    trace.add(rule.getId() + "?");
+                }
                 return Classification.failed(trace.toString(), x);
             }
 
-            trace.add(rule.getId() + (rule.isImplemented() ? (answer ? "Y" : "N") : "-"));
+            if (rule.appearsInTrace()) {
+                trace.add(rule.getId() + (rule.isImplemented() ? (answer ? "Y" : "N") : "-"));
+            }
 
             int[] row = transitions[node - 1];
             int category = answer ? row[3] : row[2];

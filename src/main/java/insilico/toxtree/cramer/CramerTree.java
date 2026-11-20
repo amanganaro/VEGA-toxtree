@@ -19,9 +19,11 @@ import insilico.toxtree.core.DecisionTree;
 import insilico.toxtree.core.FlagRule;
 import insilico.toxtree.core.UnimplementedRule;
 import insilico.toxtree.cramer.rules.AliphaticWithFunctionalGroupsRule;
+import insilico.toxtree.cramer.rules.AromaticRingComplexSubstituentsRule;
 import insilico.toxtree.cramer.rules.BenzeneDerivativeRule;
 import insilico.toxtree.cramer.rules.CommonTerpeneRule;
 import insilico.toxtree.cramer.rules.ElementsOtherThanRule;
+import insilico.toxtree.cramer.rules.FusedOrUnsaturatedLactoneRule;
 import insilico.toxtree.cramer.rules.HeterocyclicComplexSubstituentsRule;
 import insilico.toxtree.cramer.rules.HydrolysisRules;
 import insilico.toxtree.cramer.rules.KetoneAlcoholRule;
@@ -113,7 +115,7 @@ public final class CramerTree extends DecisionTree {
                 new BenzeneDerivativeRule(),
                 new FlagRule("7", "Heterocyclic", MolFlags::isHeterocyclic),
                 new LactoneRule(),
-                new UnimplementedRule("9", "Fused or unsaturated lactone"),
+                new FusedOrUnsaturatedLactoneRule(),
                 new FlagRule("10", "Three-membered heterocycle", MolFlags::isHeterocyclic3),
                 new HeterocyclicComplexSubstituentsRule(),
                 new FlagRule("12", "Heteroaromatic", MolFlags::isHeteroaromatic),
@@ -134,16 +136,16 @@ public final class CramerTree extends DecisionTree {
                 RingRules.ringsHaveSubstituents("27", "Rings with substituents"),
                 RingRules.manyAromaticRings("28"),
                 HydrolysisRules.toMononuclearResidues("29"),
-                new UnimplementedRule("30", "Ring with complex substituents"),
+                new AromaticRingComplexSubstituentsRule(),
                 new UnimplementedRule("31", "Acyclic acetal or ester of question 30"),
                 new UnimplementedRule("32", "Only the functional groups of question 30"),
                 new SulphonateGroupsRule(),
-                new FlagRule("34", "Open chain", MolFlags::isOpenChain),
-                new FlagRule("35", "Heterocyclic", MolFlags::isHeterocyclic),
-                new FlagRule("36", "Aromatic", MolFlags::isAromatic),
-                new FlagRule("37", "Heterocyclic", MolFlags::isHeterocyclic),
-                new CommonTerpeneRule("38"),
-                new FlagRule("39", "Aromatic", MolFlags::isAromatic),
+                DecisionRule.silent(new FlagRule("34", "Open chain", MolFlags::isOpenChain)),
+                DecisionRule.silent(new FlagRule("35", "Heterocyclic", MolFlags::isHeterocyclic)),
+                DecisionRule.silent(new FlagRule("36", "Aromatic", MolFlags::isAromatic)),
+                DecisionRule.silent(new FlagRule("37", "Heterocyclic", MolFlags::isHeterocyclic)),
+                DecisionRule.silent(new CommonTerpeneRule("38")),
+                DecisionRule.silent(new FlagRule("39", "Aromatic", MolFlags::isAromatic)),
         };
     }
 }

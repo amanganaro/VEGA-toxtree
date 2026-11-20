@@ -50,4 +50,45 @@ public interface DecisionRule {
     default boolean isImplemented() {
         return true;
     }
+
+    /**
+     * False for a rule that is answered but not recorded in the decision trace.
+     * <p>
+     * The Cramer tree reuses a handful of generic questions, "is it an open chain", "is it aromatic", as
+     * shortcuts from several branches, and the original leaves them out of the trace it prints. Keeping them out
+     * here too is what lets a trace be compared with the original's character for character.
+     */
+    default boolean appearsInTrace() {
+        return true;
+    }
+
+    /** The same rule, answered as before but left out of the decision trace. */
+    static DecisionRule silent(DecisionRule rule) {
+        return new DecisionRule() {
+            @Override
+            public String getId() {
+                return rule.getId();
+            }
+
+            @Override
+            public String getTitle() {
+                return rule.getTitle();
+            }
+
+            @Override
+            public boolean verify(org.openscience.cdk.interfaces.IAtomContainer mol, RuleContext ctx) {
+                return rule.verify(mol, ctx);
+            }
+
+            @Override
+            public boolean isImplemented() {
+                return rule.isImplemented();
+            }
+
+            @Override
+            public boolean appearsInTrace() {
+                return false;
+            }
+        };
+    }
 }
