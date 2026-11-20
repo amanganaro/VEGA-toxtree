@@ -18,11 +18,13 @@ import insilico.toxtree.core.DecisionRule;
 import insilico.toxtree.core.DecisionTree;
 import insilico.toxtree.core.FlagRule;
 import insilico.toxtree.core.UnimplementedRule;
+import insilico.toxtree.cramer.rules.AliphaticWithFunctionalGroupsRule;
 import insilico.toxtree.cramer.rules.CommonTerpeneRule;
 import insilico.toxtree.cramer.rules.ElementsOtherThanRule;
 import insilico.toxtree.cramer.rules.HeterocyclicComplexSubstituentsRule;
 import insilico.toxtree.cramer.rules.HydrolysisRules;
 import insilico.toxtree.cramer.rules.LactoneRule;
+import insilico.toxtree.cramer.rules.MonocarbocyclicRule;
 import insilico.toxtree.cramer.rules.RingRules;
 import insilico.toxtree.cramer.rules.SaltOrSulphonateRule;
 import insilico.toxtree.cramer.rules.SimplyBranchedOrCarbohydrateRule;
@@ -117,11 +119,11 @@ public final class CramerTree extends DecisionTree {
                 HydrolysisRules.toCommonTerpene("17"),
                 new UnimplementedRule("18", "Ketone, alcohol, acid or ester"),
                 new FlagRule("19", "Open chain", MolFlags::isOpenChain),
-                new UnimplementedRule("20", "Aliphatic with some functional groups"),
+                new AliphaticWithFunctionalGroupsRule(),
                 new UnimplementedRule("21", "More than three different functional groups"),
                 StructureListRule.commonComponentOfFood(),
                 new FlagRule("23", "Aromatic", MolFlags::isAromatic),
-                new UnimplementedRule("24", "Monocarbocyclic"),
+                new MonocarbocyclicRule(),
                 new UnimplementedRule("25", "Cyclopropane or cyclobutane"),
                 new UnimplementedRule("26", "Monocycloalkanone or related"),
                 RingRules.ringsHaveSubstituents("27", "Rings with substituents"),
