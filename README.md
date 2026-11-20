@@ -52,13 +52,13 @@ distingue a colpo d'occhio da uno che risponde male.
 
 ## Stato
 
-| Albero | Regole fatte | Concordanza con Toxtree |
+| Albero | Domande fatte | Concordanza con Toxtree |
 |---|---|---|
 | Verhaar | **34 su 34** | **100%**: 586 molecole su 586, traccia e categoria identiche |
-| Cramer | 0 su 34 | — |
+| Cramer | **39 su 39** | **categoria identica su tutte le 584 molecole**; traccia identica su 576 (98,6%) |
 
-Verhaar è finito. Manca Cramer, che riusa l'impalcatura e in più ha bisogno della simulazione di idrolisi e delle
-liste di strutture in InChI.
+Entrambi gli alberi sono completi. Le 8 tracce che differiscono riguardano 4 molecole, per due motivi soli,
+descritti sotto: i residui e un carbonio impossibile.
 
 ## Verifica
 
@@ -69,10 +69,27 @@ divergono.
 I file di riferimento stanno in `src/test/resources/reference` e si rigenerano con il profilo `toxtree-reference`,
 che è l'unico punto in cui serve ancora il Nexus di IdeaConsult.
 
-## Tre particolarità dell'originale, riprodotte apposta
+## Particolarità dell'originale, riprodotte apposta
 
-Il porting riproduce il comportamento attuale, non quello che ci si aspetterebbe. Tre punti meritano di essere
+Il porting riproduce il comportamento attuale, non quello che ci si aspetterebbe. Questi punti meritano di essere
 scritti, perché sembrano errori e in parte lo sono:
+
+- **Le domande 6 e 30 di Cramer non possono mai rispondere sì.** Entrambe chiedono a Toxtree di considerare solo
+  gli anelli aromatici, e la selezione non ne trova mai uno: il flag aromatico viene memorizzato come se fosse una
+  maschera di bit e poi confrontato con le posizioni dei flag degli anelli. L'anetolo e l'estragolo, un alcossile
+  in para a una catena idrocarburica, sono esattamente ciò che la domanda 6 descrive, e Toxtree risponde no a
+  entrambi; così la benzammide e il fenil isocianato alla domanda 30. La logica prevista resta nel codice, dietro
+  un interruttore in ciascuna classe.
+- **La domanda 3 decide la divalenza dello zolfo in due modi diversi** a seconda della molecola: chiede la valenza
+  a CDK, che per uno zolfo aromatico dà 2, ma ripiega su una somma degli ordini di legame, dove lo zolfo aromatico
+  fa 3, appena incontra uno zolfo non divalente. Quale percorso giri lo decide la molecola intera, non l'atomo.
+- **I carboni di Toxtree non sono carboni qualsiasi:** molti gruppi richiedono un carbonio che porti almeno un
+  idrogeno, oppure nessuno e solo vicini carboni. Il carbonio carbonilico di un'ammide non qualifica, e quindi un
+  azoto ureico non è un'ammina secondaria alifatica.
+- **Le query sui legami guardano solo l'ordine e ignorano l'aromaticità**, cosa che SMARTS non permette: per questo
+  i gruppi definiti sull'ordine girano su una vista di Kekulé con i flag aromatici azzerati. È così che il
+  piridinio risulta avere un azoto quaternario e lo zolfo del tiofene un solfuro.
+- **I match sovrapposti di uno stesso gruppo si scartano, contandoli per legame.**
 
 - **La struttura principale non viene mai richiesta.** Toxtree risponde "sì, è un fenolo debolmente acido" per il
   tiofene e per la tiirana. `RuleRingMainStrucSubstituents` assegna la struttura principale dentro `initQuery()`,
@@ -89,6 +106,13 @@ scritti, perché sembrano errori e in parte lo sono:
 
 ## Due differenze note rispetto a Toxtree
 
+- **Residui.** Quando la domanda 4 di Cramer risponde sì, Toxtree stacca il gruppo e pone tutte le domande
+  successive al residuo, non alla molecola intera; la sua traccia lo segna con delle parentesi. Il porting
+  continua a interrogare la molecola intera. Riguarda 7 tracce su 584 e **non cambia nessuna classificazione**,
+  perché le categorie coincidono comunque.
+- **Un carbonio impossibile.** `C(C)(C)(C)(C)C`, con cinque carboni attaccati, fa fallire l'atom typing del CDK
+  vecchio e Toxtree ne conta male gli idrogeni; CDK 2.3 lo tipizza senza storcere il naso. È l'unica differenza
+  non dovuta ai residui.
 - **Idrogeni.** Toxtree li rende tutti espliciti; VEGA li tiene impliciti. Parecchi SMARTS dipendono da quelli
   espliciti (`C=;!:CC(O[H])` nomina un idrogeno, e `[OH1]C[!$(C=C);!$(C#C)]` trova il metanolo solo perché il terzo
   atomo può essere un idrogeno), quindi il matching gira su una copia con gli idrogeni espliciti, costruita una volta

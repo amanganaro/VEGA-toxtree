@@ -60,9 +60,14 @@ class TraceComparisonTest {
     }
 
     @Test
-    void cramerProgress() throws Exception {
-        // Not an assertion yet: the port is still being written, and the report says how far it has got.
-        report(new CramerTree(), "reference/cramer-core.tsv");
+    void cramerReproducesToxtree() throws Exception {
+        Agreement agreement = report(new CramerTree(), "reference/cramer-core.tsv");
+        assertEquals(agreement.compared(), agreement.sameCategory(),
+                "Every molecule must come out in the class Toxtree gives it");
+        // Traces are not yet identical for the handful of molecules where Toxtree carries on with a residue
+        // rather than the whole molecule; see the README.
+        assertTrue(agreement.sameTrace() >= agreement.compared() - 10,
+                "Traces that differ: " + (agreement.compared() - agreement.sameTrace()));
     }
 
     /** @param compared molecules classified, @param sameTrace how many took the very same path */
