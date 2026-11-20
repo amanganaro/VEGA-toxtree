@@ -54,7 +54,10 @@ public final class AromaticRingComplexSubstituentsRule extends AbstractRule {
 
     private static final List<FunctionalGroup> ALLOWED_GROUPS = List.of(
             CramerGroups.hydroxyOnRing(),
-            FunctionalGroup.of(METHOXY_RING, "[#6;R]-[#8]-[#6]([#1])([#1])[#1]", 0),
+            // Not restricted to a ring, despite the name: the "atom in a ring" that Toxtree anchors this
+            // group on declares its test with the wrong parameter type, so it never overrides anything and
+            // matches any atom at all. A methoxy on a phosphorus qualifies.
+            FunctionalGroup.of(METHOXY_RING, "[*]-[#8]-[#6]([#1])([#1])[#1]", 0),
             CramerGroups.alcohol(),
             CramerGroups.ketone(),
             CramerGroups.aldehyde(),

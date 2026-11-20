@@ -66,8 +66,26 @@ descritti sotto: i residui e un carbonio impossibile.
 dataset golden di VEGA, e stampa la concordanza di ogni singola regola più le molecole su cui le due implementazioni
 divergono.
 
-I file di riferimento stanno in `src/test/resources/reference` e si rigenerano con il profilo `toxtree-reference`,
-che è l'unico punto in cui serve ancora il Nexus di IdeaConsult.
+I file di riferimento stanno in `src/test/resources/reference`:
+
+| File | Molecole | Origine |
+|---|---|---|
+| `cramer-core.tsv`, `verhaar-core.tsv` | 603 | dataset golden di VEGA |
+| `verhaar-2000.tsv` | 121 | dati di validazione di Toxtree, Verhaar et al. 2000 |
+| `cramer-logp.tsv`, `verhaar-logp.tsv` | 9961 | training set di logP, fatto girare con VEGA 1.2.4 |
+
+Si rigenerano con gli strumenti in [`tools/`](tools/README.md), l'unico punto in cui serve ancora il wrapper
+vecchio e il Nexus di IdeaConsult.
+
+### La verifica gruppo per gruppo
+
+Il confronto delle tracce dice se una regola risponde come deve, ma non vede un gruppo funzionale scritto male
+finché non capita la molecola che lo mette in crisi. Per questo c'è `tools/VerifyGroups`, che confronta **ogni
+gruppo, atomo per atomo**, con quello che Toxtree costruisce: stessa molecola, stessi atomi toccati.
+
+Su 66 gruppi, 50 coincidono esattamente e 11 coincidono sulla vista di Kekulé, cioè sono definiti sull'ordine dei
+legami. Le tre segnalazioni che restano non hanno effetto su nessuna classificazione e sono spiegate in
+`tools/README.md`.
 
 ## Particolarità dell'originale, riprodotte apposta
 

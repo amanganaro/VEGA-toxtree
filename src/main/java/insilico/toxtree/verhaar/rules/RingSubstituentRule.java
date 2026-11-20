@@ -64,10 +64,15 @@ public class RingSubstituentRule extends AbstractRule {
     private static final FunctionalGroup NITRO_NEUTRAL =
             FunctionalGroup.of(NITRO, "[!#1]-[#7](=[#8])=[#8]");
 
-    /** A benzene ring carrying a hydroxyl. */
-    public static final String PHENOL = "[#6]1:[#6]:[#6]:[#6]:[#6]:[#6]:1-[#8]-[#1]";
-    /** A benzene ring carrying an amine. */
-    public static final String ANILINE = "[#6]1:[#6]:[#6]:[#6]:[#6]:[#6]:1-[#7]-[#1]";
+    /**
+     * A benzene ring carrying a hydroxyl, and one carrying an amine.
+     * <p>
+     * The bond to the heteroatom may itself be aromatic. Toxtree asks only for a bond of single order and takes
+     * no notice of aromaticity, so in a fused system such as benzimidazole the ring nitrogen still makes an
+     * aniline of the benzene ring it is attached to.
+     */
+    public static final String PHENOL = "[#6]1:[#6]:[#6]:[#6]:[#6]:[#6]:1-,:[#8]-[#1]";
+    public static final String ANILINE = "[#6]1:[#6]:[#6]:[#6]:[#6]:[#6]:1-,:[#7]-[#1]";
     /** An aromatic six-membered ring that starts at a nitrogen and is otherwise carbon or nitrogen. */
     public static final String PYRIDINE = "[#7]1:[#6,#7]:[#6,#7]:[#6,#7]:[#6,#7]:[#6,#7]:1";
 
