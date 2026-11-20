@@ -20,6 +20,7 @@ import insilico.toxtree.core.FlagRule;
 import insilico.toxtree.core.UnimplementedRule;
 import insilico.toxtree.cramer.rules.CommonTerpeneRule;
 import insilico.toxtree.cramer.rules.ElementsOtherThanRule;
+import insilico.toxtree.cramer.rules.HydrolysisRules;
 import insilico.toxtree.cramer.rules.RingRules;
 import insilico.toxtree.cramer.rules.SimplyBranchedOrCarbohydrateRule;
 import insilico.toxtree.cramer.rules.StructureListRule;
@@ -108,9 +109,9 @@ public final class CramerTree extends DecisionTree {
                 new FlagRule("12", "Heteroaromatic", MolFlags::isHeteroaromatic),
                 RingRules.ringsHaveSubstituents("13", "Ring with substituents"),
                 RingRules.manyAromaticRings("14"),
-                new UnimplementedRule("15", "Readily hydrolysed to a mononuclear residue"),
+                HydrolysisRules.toMononuclearResidues("15"),
                 new CommonTerpeneRule("16"),
-                new UnimplementedRule("17", "Readily hydrolysed to a common terpene"),
+                HydrolysisRules.toCommonTerpene("17"),
                 new UnimplementedRule("18", "Ketone, alcohol, acid or ester"),
                 new FlagRule("19", "Open chain", MolFlags::isOpenChain),
                 new UnimplementedRule("20", "Aliphatic with some functional groups"),
@@ -122,7 +123,7 @@ public final class CramerTree extends DecisionTree {
                 new UnimplementedRule("26", "Monocycloalkanone or related"),
                 RingRules.ringsHaveSubstituents("27", "Rings with substituents"),
                 RingRules.manyAromaticRings("28"),
-                new UnimplementedRule("29", "Readily hydrolysed"),
+                HydrolysisRules.toMononuclearResidues("29"),
                 new UnimplementedRule("30", "Ring with complex substituents"),
                 new UnimplementedRule("31", "Acyclic acetal or ester of question 30"),
                 new UnimplementedRule("32", "Only the functional groups of question 30"),

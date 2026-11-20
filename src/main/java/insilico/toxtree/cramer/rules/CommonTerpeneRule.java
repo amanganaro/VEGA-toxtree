@@ -58,7 +58,16 @@ public final class CommonTerpeneRule extends AbstractRule {
 
     @Override
     public boolean verify(IAtomContainer mol, RuleContext ctx) {
-        IAtomContainer target = ctx.kekule();
+        return isCommonTerpene(ctx.kekule(), ctx.explicitFlags().getRingCount());
+    }
+
+    /**
+     * The test itself, so that question 17 can put the fragments of a hydrolysis to it.
+     *
+     * @param target    a molecule with explicit hydrogens
+     * @param ringCount how many rings it has
+     */
+    public static boolean isCommonTerpene(IAtomContainer target, int ringCount) {
 
         int carbon = 0;
         int hydrogen = 0;
@@ -100,18 +109,17 @@ public final class CommonTerpeneRule extends AbstractRule {
             return false;
         }
 
-        int rings = ctx.explicitFlags().getRingCount();
-        if (rings > 0 && carbon + hydrogen == target.getAtomCount()) {
+        if (ringCount > 0 && carbon + hydrogen == target.getAtomCount()) {
             int doubleBonds = 0;
             for (IBond bond : target.bonds()) {
                 if (bond.getOrder() == IBond.Order.DOUBLE) {
                     doubleBonds++;
                 }
             }
-            if (rings == 1 && doubleBonds != 2) {
+            if (ringCount == 1 && doubleBonds != 2) {
                 return false;
             }
-            if (rings == 2 && doubleBonds != 1) {
+            if (ringCount == 2 && doubleBonds != 1) {
                 return false;
             }
         }
