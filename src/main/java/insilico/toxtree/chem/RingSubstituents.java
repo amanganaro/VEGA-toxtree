@@ -56,6 +56,14 @@ public final class RingSubstituents {
                 ringAtoms.add(index);
             }
         }
+        return of(mol, ringAtoms);
+    }
+
+    /**
+     * The substituents of a ring given by the positions of its atoms, for callers that work on a view of the
+     * molecule the ring was not perceived on. The two must hold the same atoms in the same order.
+     */
+    public static List<IAtomContainer> of(IAtomContainer mol, Set<Integer> ringAtoms) {
 
         IAtomContainer rest = SilentChemObjectBuilder.getInstance().newAtomContainer();
         for (int i = 0; i < mol.getAtomCount(); i++) {

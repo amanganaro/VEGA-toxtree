@@ -20,6 +20,7 @@ import insilico.toxtree.core.FlagRule;
 import insilico.toxtree.core.UnimplementedRule;
 import insilico.toxtree.cramer.rules.CommonTerpeneRule;
 import insilico.toxtree.cramer.rules.ElementsOtherThanRule;
+import insilico.toxtree.cramer.rules.HeterocyclicComplexSubstituentsRule;
 import insilico.toxtree.cramer.rules.HydrolysisRules;
 import insilico.toxtree.cramer.rules.LactoneRule;
 import insilico.toxtree.cramer.rules.RingRules;
@@ -107,7 +108,7 @@ public final class CramerTree extends DecisionTree {
                 new LactoneRule(),
                 new UnimplementedRule("9", "Fused or unsaturated lactone"),
                 new FlagRule("10", "Three-membered heterocycle", MolFlags::isHeterocyclic3),
-                new UnimplementedRule("11", "Heterocyclic with complex substituents"),
+                new HeterocyclicComplexSubstituentsRule(),
                 new FlagRule("12", "Heteroaromatic", MolFlags::isHeteroaromatic),
                 RingRules.ringsHaveSubstituents("13", "Ring with substituents"),
                 RingRules.manyAromaticRings("14"),
