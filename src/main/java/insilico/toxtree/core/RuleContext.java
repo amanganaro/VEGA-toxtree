@@ -83,6 +83,21 @@ public final class RuleContext {
      * the Kekulé orders of the ring. Clearing the flags reproduces that reading exactly, and it must not be
      * used for patterns that ask about aromaticity.
      */
+    /**
+     * The position of an atom in {@link #withExplicitHydrogens()}, which is also its position in
+     * {@link #kekule()}.
+     * <p>
+     * The two views hold the same atoms in the same order, the second being a copy of the first, so a position
+     * identifies an atom in either. Object identity does not: the copies are different objects, and the rings
+     * CDK hands back wrap the atoms rather than being them. Anything that has to carry an atom from one view to
+     * the other goes through here.
+     *
+     * @return the position, or -1 if the atom does not belong to this molecule
+     */
+    public int indexOf(IAtom atom) {
+        return withExplicitHydrogens().indexOf(atom);
+    }
+
     public IAtomContainer kekule() {
         if (kekule == null) {
             try {

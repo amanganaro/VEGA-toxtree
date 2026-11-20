@@ -21,6 +21,7 @@ import insilico.toxtree.core.UnimplementedRule;
 import insilico.toxtree.cramer.rules.CommonTerpeneRule;
 import insilico.toxtree.cramer.rules.ElementsOtherThanRule;
 import insilico.toxtree.cramer.rules.HydrolysisRules;
+import insilico.toxtree.cramer.rules.LactoneRule;
 import insilico.toxtree.cramer.rules.RingRules;
 import insilico.toxtree.cramer.rules.SaltOrSulphonateRule;
 import insilico.toxtree.cramer.rules.SimplyBranchedOrCarbohydrateRule;
@@ -103,7 +104,7 @@ public final class CramerTree extends DecisionTree {
                 new SimplyBranchedOrCarbohydrateRule(),
                 new UnimplementedRule("6", "Common benzene derivative"),
                 new FlagRule("7", "Heterocyclic", MolFlags::isHeterocyclic),
-                new UnimplementedRule("8", "Lactone or cyclic diester"),
+                new LactoneRule(),
                 new UnimplementedRule("9", "Fused or unsaturated lactone"),
                 new FlagRule("10", "Three-membered heterocycle", MolFlags::isHeterocyclic3),
                 new UnimplementedRule("11", "Heterocyclic with complex substituents"),
