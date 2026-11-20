@@ -33,6 +33,7 @@ import insilico.toxtree.cramer.rules.SaltOrSulphonateRule;
 import insilico.toxtree.cramer.rules.SmallRingRules;
 import insilico.toxtree.cramer.rules.SimplyBranchedOrCarbohydrateRule;
 import insilico.toxtree.cramer.rules.StructureListRule;
+import insilico.toxtree.cramer.rules.SulphonateGroupsRule;
 import insilico.toxtree.cramer.rules.ToxicFunctionalGroupsRule;
 
 /**
@@ -136,7 +137,7 @@ public final class CramerTree extends DecisionTree {
                 new UnimplementedRule("30", "Ring with complex substituents"),
                 new UnimplementedRule("31", "Acyclic acetal or ester of question 30"),
                 new UnimplementedRule("32", "Only the functional groups of question 30"),
-                new UnimplementedRule("33", "Sufficient sulphonate groups"),
+                new SulphonateGroupsRule(),
                 new FlagRule("34", "Open chain", MolFlags::isOpenChain),
                 new FlagRule("35", "Heterocyclic", MolFlags::isHeterocyclic),
                 new FlagRule("36", "Aromatic", MolFlags::isAromatic),
