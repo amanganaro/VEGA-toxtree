@@ -10,6 +10,7 @@ package insilico.toxtree;
 import insilico.core.molecule.conversion.SmilesMolecule;
 import insilico.toxtree.core.Classification;
 import insilico.toxtree.core.DecisionTree;
+import insilico.toxtree.cramer.CramerTree;
 import insilico.toxtree.verhaar.VerhaarTree;
 import org.junit.jupiter.api.Test;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -56,6 +57,12 @@ class TraceComparisonTest {
         Agreement agreement = report(new VerhaarTree(), "reference/verhaar-2000.tsv");
         assertEquals(agreement.compared(), agreement.sameTrace(),
                 "Every decision trace must match the one Toxtree produced");
+    }
+
+    @Test
+    void cramerProgress() throws Exception {
+        // Not an assertion yet: the port is still being written, and the report says how far it has got.
+        report(new CramerTree(), "reference/cramer-core.tsv");
     }
 
     /** @param compared molecules classified, @param sameTrace how many took the very same path */
