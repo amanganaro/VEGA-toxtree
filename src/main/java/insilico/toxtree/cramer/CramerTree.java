@@ -27,6 +27,7 @@ import insilico.toxtree.cramer.rules.LactoneRule;
 import insilico.toxtree.cramer.rules.MonocarbocyclicRule;
 import insilico.toxtree.cramer.rules.RingRules;
 import insilico.toxtree.cramer.rules.SaltOrSulphonateRule;
+import insilico.toxtree.cramer.rules.SmallRingRules;
 import insilico.toxtree.cramer.rules.SimplyBranchedOrCarbohydrateRule;
 import insilico.toxtree.cramer.rules.StructureListRule;
 import insilico.toxtree.cramer.rules.ToxicFunctionalGroupsRule;
@@ -124,8 +125,8 @@ public final class CramerTree extends DecisionTree {
                 StructureListRule.commonComponentOfFood(),
                 new FlagRule("23", "Aromatic", MolFlags::isAromatic),
                 new MonocarbocyclicRule(),
-                new UnimplementedRule("25", "Cyclopropane or cyclobutane"),
-                new UnimplementedRule("26", "Monocycloalkanone or related"),
+                SmallRingRules.cyclopropaneOrCyclobutane("25"),
+                SmallRingRules.monocycloalkanoneOrBicyclic("26"),
                 RingRules.ringsHaveSubstituents("27", "Rings with substituents"),
                 RingRules.manyAromaticRings("28"),
                 HydrolysisRules.toMononuclearResidues("29"),
