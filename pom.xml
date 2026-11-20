@@ -6,7 +6,7 @@
 
     <groupId>InSilico</groupId>
     <artifactId>ToxTreeRules</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <name>VEGA ToxTree rules</name>
@@ -37,6 +37,13 @@
             <url>https://nexus.protoqsar.com/repository/maven-public/</url>
         </repository>
     </repositories>
+
+    <distributionManagement>
+        <repository>
+            <id>protoqsar-maven-releases</id>
+            <url>https://nexus.protoqsar.com/repository/maven-releases/</url>
+        </repository>
+    </distributionManagement>
 
     <dependencies>
         <dependency>
