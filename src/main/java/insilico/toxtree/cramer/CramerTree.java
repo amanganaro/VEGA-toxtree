@@ -24,6 +24,7 @@ import insilico.toxtree.cramer.rules.ElementsOtherThanRule;
 import insilico.toxtree.cramer.rules.HeterocyclicComplexSubstituentsRule;
 import insilico.toxtree.cramer.rules.HydrolysisRules;
 import insilico.toxtree.cramer.rules.LactoneRule;
+import insilico.toxtree.cramer.rules.ManyFunctionalGroupsRule;
 import insilico.toxtree.cramer.rules.MonocarbocyclicRule;
 import insilico.toxtree.cramer.rules.RingRules;
 import insilico.toxtree.cramer.rules.SaltOrSulphonateRule;
@@ -121,7 +122,7 @@ public final class CramerTree extends DecisionTree {
                 new UnimplementedRule("18", "Ketone, alcohol, acid or ester"),
                 new FlagRule("19", "Open chain", MolFlags::isOpenChain),
                 new AliphaticWithFunctionalGroupsRule(),
-                new UnimplementedRule("21", "More than three different functional groups"),
+                new ManyFunctionalGroupsRule(),
                 StructureListRule.commonComponentOfFood(),
                 new FlagRule("23", "Aromatic", MolFlags::isAromatic),
                 new MonocarbocyclicRule(),
