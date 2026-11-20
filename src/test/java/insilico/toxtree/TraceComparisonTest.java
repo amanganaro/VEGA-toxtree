@@ -49,6 +49,15 @@ class TraceComparisonTest {
                 "Every decision trace must match the one Toxtree produced");
     }
 
+    @Test
+    void verhaarReproducesToxtreeOnTheVerhaar2000Set() throws Exception {
+        // An independent set: the 121 molecules of Verhaar et al. 2000, which Toxtree ships as its own
+        // validation data. Nothing in the port was tuned on them.
+        Agreement agreement = report(new VerhaarTree(), "reference/verhaar-2000.tsv");
+        assertEquals(agreement.compared(), agreement.sameTrace(),
+                "Every decision trace must match the one Toxtree produced");
+    }
+
     /** @param compared molecules classified, @param sameTrace how many took the very same path */
     private record Agreement(int compared, int sameCategory, int sameTrace) {
     }

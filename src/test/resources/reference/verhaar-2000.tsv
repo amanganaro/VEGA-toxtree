@@ -1,0 +1,118 @@
+smiles	category	trace
+CO	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1N,1.5.2Y
+ClC(C(Cl)(Cl)Cl)(Cl)Cl	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4Y,1.4.1Y
+C(CCO)C	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1N,1.5.2Y
+C1=CC=CC=C1	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3Y
+C(Cl)Cl	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4Y,1.4.1Y
+C(C(Cl)Cl)Cl	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4Y,1.4.1Y
+C(=CCl)(Cl)Cl	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4Y,1.4.1Y
+C(C(Cl)Cl)(Cl)Cl	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4Y,1.4.1Y
+C1=CC=2CCC=3C2C(=C1)C=CC3	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3Y
+C1=C(C(=CC=C1)C)C	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3Y
+C(C(CC)=O)C	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1N,1.5.2N,1.5.3N,1.5.4Y
+C1=C(C(C)(C)C)C=CC(=C1)C	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3Y
+C=1C(=CC=CC1)C=C	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3Y
+C=1C(=CC=C(C1)C)C	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3Y
+C1=C(C=CC(=C1)Cl)Cl	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4Y,1.4.1N,1.4.2Y
+C(C)C(CCCCC)=O	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1N,1.5.2N,1.5.3N,1.5.4Y
+C(C(OC)(C)C)C(C)=O	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1Y
+C(C(C)C)C(C)=O	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1N,1.5.2N,1.5.3N,1.5.4Y
+CC(OC(C)C)C	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1Y
+C=1C(=CC=CC1C)C	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3Y
+C=1C(=CC=CC1)C	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3Y
+C1=C(C=CC=C1)Cl	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4Y,1.4.1N,1.4.2Y
+C(Br)CCCl	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4Y,1.4.1Y
+C1CC=CCCC=C1	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3Y
+C(CCCCO)CCC	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1N,1.5.2Y
+C(CCCCCO)CCCC	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1N,1.5.2Y
+C(C)CCOCCOCCO	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1Y
+C1=C(C(=CC(=C1)Cl)Cl)Cl	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4Y,1.4.1N,1.4.2N,1.4.3Y
+C1C2C=CC1C=C2	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3Y
+C(C(C)=O)C(C)=O	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1N,1.5.2N,1.5.3N,1.5.4Y
+C(=C(Cl)Cl)(Cl)Cl	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4Y,1.4.1Y
+C(Cl)CCCl	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4Y,1.4.1Y
+C(CCCCC)CCCO	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1N,1.5.2Y
+C1C=CC=CC=C1	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3Y
+C(CO)CCl	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5N,1.6N,1.7Y,1.7.1Y
+C1C=CCCC=CCCC=CC1	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3Y
+C(CCCCCCCC)CCCOCCO	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1Y
+C1=C(C(CC(C)(C)C)(C)C)C=CC(=C1)OCCO	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1Y
+C=1C(=CC=C(C1)OCCOCCO)CCCCCCCCC	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1Y
+C(O)(CC)C	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1N,1.5.2Y
+C=1C(=CC=CC1)N	Class 5 (Not possible to classify according to these rules)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5N,1.6Y,1.6.1N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5N,3.6N,3.7N,3.8N,4N
+C=1C(C(C2=CC=C(O)C=C2)(C)C)=CC=C(C1)O	Class 5 (Not possible to classify according to these rules)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1N,1.5.2N,1.5.3N,1.5.4N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5N,3.6N,3.7N,3.8N,4N
+C=1C(=C(C(=CC1Cl)Cl)O)Cl	Class 4 (compounds and groups of compounds acting by a specific mechanism)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5N,1.6N,1.7Y,1.7.1N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5N,3.6N,3.7N,3.8N,4Y
+C=1C(=C(C=CC1O)[N+](=O)[O-])C(F)(F)F	Class 5 (Not possible to classify according to these rules)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5N,1.6N,1.7N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5N,3.6N,3.7N,3.8N,4N
+C=1C=CC=C(C1O)C	Class 5 (Not possible to classify according to these rules)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1N,1.5.2N,1.5.3N,1.5.4N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5N,3.6N,3.7N,3.8N,4N
+C1=C(C(=CC=C1)Cl)O	Class 5 (Not possible to classify according to these rules)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5N,1.6N,1.7Y,1.7.1N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5N,3.6N,3.7N,3.8N,4N
+C1=C(C=CC(=C1)[N+]([O-])=O)O	Class 5 (Not possible to classify according to these rules)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5N,1.6N,1.7N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5N,3.6N,3.7N,3.8N,4N
+C=1C(C)=C(O)C=CC1C	Class 5 (Not possible to classify according to these rules)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1N,1.5.2N,1.5.3N,1.5.4N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5N,3.6N,3.7N,3.8N,4N
+C1=C(C)C=CC(=C1)O	Class 5 (Not possible to classify according to these rules)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1N,1.5.2N,1.5.3N,1.5.4N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5N,3.6N,3.7N,3.8N,4N
+C1=C(C)C=CC=C1O	Class 5 (Not possible to classify according to these rules)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1N,1.5.2N,1.5.3N,1.5.4N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5N,3.6N,3.7N,3.8N,4N
+C1=C(C)C=C(C=C1C)O	Class 5 (Not possible to classify according to these rules)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1N,1.5.2N,1.5.3N,1.5.4N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5N,3.6N,3.7N,3.8N,4N
+C1=C(C=CC=C1)O	Class 5 (Not possible to classify according to these rules)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1N,1.5.2N,1.5.3N,1.5.4N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5N,3.6N,3.7N,3.8N,4N
+C(OC(C)=O)COC	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1Y
+C(OC(C)=O)COCC	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1Y
+C=1C(=C(O)C(Br)=CC1Br)Br	Class 5 (Not possible to classify according to these rules)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5N,1.6N,1.7Y,1.7.1N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5N,3.6N,3.7N,3.8N,4N
+C1=C(C(=CC(=C1)Cl)Cl)O	Class 5 (Not possible to classify according to these rules)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5N,1.6N,1.7Y,1.7.1N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5N,3.6N,3.7N,3.8N,4N
+C=1C(=C(C(=CC1)C)O)C	Class 5 (Not possible to classify according to these rules)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1N,1.5.2N,1.5.3N,1.5.4N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5N,3.6N,3.7N,3.8N,4N
+C=1C(=C(C=CC1)Br)[N+](=O)[O-]	Class 2 (less inert compounds)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5N,1.6N,1.7N,2.1Y
+C(NC1=NC(=NC(=N1)Cl)NC(C)C)C	Class 5 (Not possible to classify according to these rules)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5N,1.6N,1.7N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5N,3.6N,3.7N,3.8N,4N
+C=1C(=C(N=C(C1Cl)Cl)[O-])Cl.[Na+]	Class 5 (Not possible to classify according to these rules)	0.1N,4N
+C1=C(C(=NC(OC)=C1Cl)Cl)Cl	Class 5 (Not possible to classify according to these rules)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5N,1.6N,1.7N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5N,3.6N,3.7N,3.8N,4N
+C1=C(C(=CC=C1[N+](=O)[O-])O)[N+](=O)[O-]	Class 5 (Not possible to classify according to these rules)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5N,1.6N,1.7N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5N,3.6N,3.7N,3.8N,4N
+CN(C=O)C	Class 3 (unspecific reactivity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5N,1.6N,1.7N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5N,3.6N,3.7N,3.8Y
+C1OC1	Class 2 (less inert compounds)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1N,1.5.2N,1.5.3N,1.5.4N,2.1Y
+CC1CO1	Class 2 (less inert compounds)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1N,1.5.2N,1.5.3N,1.5.4N,2.1Y
+O=C(C=C)N	Class 3 (unspecific reactivity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5N,1.6N,1.7N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5Y
+C=1C(=C(C(OCC(C)C)=O)C=CC1)C(OCC(C)C)=O	Class 5 (Not possible to classify according to these rules)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1N,1.5.2N,1.5.3N,1.5.4N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5N,3.6N,3.7N,3.8N,4N
+C1=C(C(=CC=C1)C(OCCCC)=O)C(OCCCC)=O	Class 5 (Not possible to classify according to these rules)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1N,1.5.2N,1.5.3N,1.5.4N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5N,3.6N,3.7N,3.8N,4N
+C=1C(=C(C=CC1)C(OCCCC)=O)C(OCC2=CC=CC=C2)=O	Class 5 (Not possible to classify according to these rules)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1N,1.5.2N,1.5.3N,1.5.4N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5N,3.6N,3.7N,3.8N,4N
+C=1C(=CC=CC1)C=O	Class 3 (unspecific reactivity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1N,1.5.2N,1.5.3N,1.5.4N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5N,3.6N,3.7N,3.8Y
+O=C1C=CC(C=C1)=O	Class 3 (unspecific reactivity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1N,1.5.2N,1.5.3N,1.5.4N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5Y
+C(C1CO1)Cl	Class 2 (less inert compounds)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5N,1.6N,1.7Y,1.7.1N,2.1Y
+C(OCC=C)C1CO1	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1Y
+C(=O)C=C	Class 3 (unspecific reactivity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1N,1.5.2N,1.5.3N,1.5.4N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5Y
+C(C=C)Cl	Class 3 (unspecific reactivity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4Y,1.4.1N,1.4.2N,1.4.3N,1.4.4N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1Y
+C(Cl)CO	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5N,1.6N,1.7Y,1.7.1Y
+C(C=C)O	Class 3 (unspecific reactivity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1N,1.5.2N,1.5.3N,1.5.4N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1Y
+C1=C(OCC2CO2)C=CC=C1	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1Y
+CC(C)=CC(C)=O	Class 3 (unspecific reactivity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1N,1.5.2N,1.5.3N,1.5.4N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5Y
+CC(=CC(C=C(C)C)=O)C	Class 3 (unspecific reactivity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1N,1.5.2N,1.5.3N,1.5.4N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5Y
+C=1C(=C(C(C)=CC1[N+](=O)[O-])O)[N+](=O)[O-]	Class 5 (Not possible to classify according to these rules)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5N,1.6N,1.7N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5N,3.6N,3.7N,3.8N,4N
+C(C(C)=C)Cl	Class 3 (unspecific reactivity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4Y,1.4.1N,1.4.2N,1.4.3N,1.4.4N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1Y
+C(O[N+]([O-])=O)COCCO[N+]([O-])=O	Class 5 (Not possible to classify according to these rules)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5N,1.6N,1.7N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5N,3.6N,3.7N,3.8N,4N
+C=1C(=C(C=CC1OC)OC)C(CBr)=O	Class 5 (Not possible to classify according to these rules)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5N,1.6N,1.7Y,1.7.1N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5N,3.6N,3.7N,3.8N,4N
+C=1C([N+]([O-])=O)=C(N(CCC)CCC)C([N+]([O-])=O)=CC1C(F)(F)F	Class 5 (Not possible to classify according to these rules)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5N,1.6N,1.7N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5N,3.6N,3.7N,3.8N,4N
+C(C(COCC=C)(COCC=C)CO)OCC=C	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1Y
+C1(C(O)=O)=C(Cl)C(N)=C(C(=N1)Cl)Cl	Class 5 (Not possible to classify according to these rules)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5N,1.6N,1.7N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5N,3.6N,3.7N,3.8N,4N
+C1=CC(=CC=C1C(OCCCC)=O)C(OCCCC)=O	Class 5 (Not possible to classify according to these rules)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1N,1.5.2N,1.5.3N,1.5.4N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5N,3.6N,3.7N,3.8N,4N
+C(SC(=O)N1CCCCCC1)C	Class 4 (compounds and groups of compounds acting by a specific mechanism)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5N,1.6N,1.7N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5N,3.6N,3.7N,3.8N,4Y
+C(OCC(CCCC)CC)C1OC1	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5Y,1.5.1Y
+ClC1(Cl)C2(Cl)C(Cl)=C(Cl)C1(Cl)C=C2	Class 3 (unspecific reactivity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4Y,1.4.1N,1.4.2N,1.4.3N,1.4.4N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1Y
+C=1C([N+]([O-])=O)=C(Cl)C=C(Cl)C1[N+]([O-])=O	Class 5 (Not possible to classify according to these rules)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5N,1.6N,1.7N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5N,3.6N,3.7N,3.8N,4N
+C1=C(OP(=S)(OCC)OCC)C=CC([N+]([O-])=O)=C1	Class 4 (compounds and groups of compounds acting by a specific mechanism)	0.1N,4Y
+C1(Cl)C(Cl)C(Cl)C(Cl)C(Cl)C1Cl	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4Y,1.4.1N,1.4.2N,1.4.3Y
+C1=C(Cl)C(O)=C(Cl)C(Cl)=C1Cl	Class 4 (compounds and groups of compounds acting by a specific mechanism)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5N,1.6N,1.7Y,1.7.1N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5N,3.6N,3.7N,3.8N,4Y
+ClC12C3C(C(C(Cl)=C1Cl)(Cl)C2(Cl)Cl)C4C5C(C3C4)O5	Class 3 (unspecific reactivity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5N,1.6N,1.7Y,1.7.1N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1Y
+O=S1OCC2C3(Cl)C(Cl)(Cl)C(Cl)(C2CO1)C(Cl)=C3Cl	Class 3 (unspecific reactivity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5N,1.6N,1.7N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1Y
+C1=CC(=CC=C1Cl)C(C(Cl)(Cl)Cl)(C2=CC=C(C=C2)Cl)O	Class 3 (unspecific reactivity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5N,1.6N,1.7Y,1.7.1N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2Y
+C(C(SP(=S)(OC)OC)C(OCC)=O)C(OCC)=O	Class 4 (compounds and groups of compounds acting by a specific mechanism)	0.1N,4Y
+[Na+].O=C([O-])C1C(C2OC1CC2)C([O-])=O.[Na+]	Class 5 (Not possible to classify according to these rules)	0.1N,4N
+C1=CC(=CC=C1OP(OC)(OC)=S)[N+]([O-])=O	Class 4 (compounds and groups of compounds acting by a specific mechanism)	0.1N,4Y
+C(SP(OCC)(OCC)=S)CSCC	Class 4 (compounds and groups of compounds acting by a specific mechanism)	0.1N,4Y
+C=1C(OP(OCC)(OCC)=S)=NC(=NC1C)C(C)C	Class 4 (compounds and groups of compounds acting by a specific mechanism)	0.1N,4Y
+C1=C(SP(OCC)(CC)=S)C=CC=C1	Class 4 (compounds and groups of compounds acting by a specific mechanism)	0.1N,4Y
+C=1C(=C(OP(OCC)(OCC)=S)N=C(Cl)C1Cl)Cl	Class 4 (compounds and groups of compounds acting by a specific mechanism)	0.1N,4Y
+C1(C(=O)OCC=2C=C(C=CC2)OC=3C=CC=CC3)C(C1C=C(Cl)Cl)(C)C	Class 4 (compounds and groups of compounds acting by a specific mechanism)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5N,1.6N,1.7Y,1.7.1N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5N,3.6N,3.7N,3.8N,4Y
+C1(C(C1C(OC(C2=CC(OC3=CC=CC=C3)=CC=C2)C#N)=O)(C)C)C=C(Br)Br	Class 3 (unspecific reactivity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5N,1.6N,1.7N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2Y
+C=1C(C2=C(C=C(Cl)C=C2)Cl)=C(C=C(Cl)C1)Cl	Class 1 (narcosis or baseline toxicity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4Y,1.4.1N,1.4.2N,1.4.3N,1.4.4Y
+C1=C(C(C(OC(C2=CC(OC3=CC=CC=C3)=CC=C2)C#N)=O)C(C)C)C=CC(=C1)OC(F)F	Class 3 (unspecific reactivity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5N,1.6N,1.7N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2Y
+C=1C2=C(OC(NC)=O)C=CC=C2C=CC1	Class 4 (compounds and groups of compounds acting by a specific mechanism)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5N,1.6N,1.7N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5N,3.6N,3.7N,3.8N,4Y
+N#C	Class 5 (Not possible to classify according to these rules)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5N,1.6Y,1.6.1N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5N,3.6N,3.7N,3.8N,4N
+C1(Cl)C2C3(Cl)C(Cl)(Cl)C(Cl)(C2C=C1)C(Cl)=C3Cl	Class 3 (unspecific reactivity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4Y,1.4.1N,1.4.2N,1.4.3N,1.4.4N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1Y
+C1(Cl)=C(Cl)C(Cl)=C(O)C(Cl)=C1Cl	Class 4 (compounds and groups of compounds acting by a specific mechanism)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5N,1.6N,1.7Y,1.7.1N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5N,3.6N,3.7N,3.8N,4Y
+CC(SC)(C=NOC(=O)NC)C	Class 4 (compounds and groups of compounds acting by a specific mechanism)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5N,1.6N,1.7N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5N,3.6N,3.7N,3.8N,4Y
+C1=C(C=2C(=C(C=CC2)Cl)Cl)C(=C(C(Cl)=C1)Cl)Cl	Class 4 (compounds and groups of compounds acting by a specific mechanism)	0.1Y,0.2N,4Y
+C1=C(CSC(N(CC)CC)=O)C=CC(=C1)Cl	Class 4 (compounds and groups of compounds acting by a specific mechanism)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5N,1.6N,1.7N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2N,3.3N,3.4N,3.5N,3.6N,3.7N,3.8N,4Y
+C=1C(C(OC(=O)C(C2=CC=C(Cl)C=C2)C(C)C)C#N)=CC=CC1OC3=CC=CC=C3	Class 3 (unspecific reactivity)	0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3N,1.4N,1.5N,1.6N,1.7N,2.1N,2.2N,2.3N,2.4N,2.5N,3.1N,3.2Y
