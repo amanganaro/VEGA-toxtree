@@ -15,6 +15,7 @@ package insilico.toxtree.core;
 
 import org.openscience.cdk.interfaces.IAtomContainer;
 
+import java.util.List;
 import java.util.StringJoiner;
 
 /**
@@ -34,6 +35,9 @@ public abstract class DecisionTree {
 
     /** Guards against a malformed table that loops; a real path is far shorter than this. */
     private static final int MAX_STEPS = 200;
+
+    /** How often a molecule may be replaced by pieces of itself before the walk gives up. */
+    private static final int MAX_RESIDUE_DEPTH = 4;
 
     private final DecisionRule[] rules;
     private final int[][] transitions;
@@ -76,10 +80,20 @@ public abstract class DecisionTree {
      * @param mol a normalized molecule
      */
     public Classification classify(IAtomContainer mol) {
-        RuleContext ctx = new RuleContext(mol);
+        return walk(mol, 1, 0, null);
+    }
+
+    /**
+     * Walks the tree from one question, on one molecule.
+     *
+     * @param from  the question to start at, 1-based
+     * @param depth how many times the molecule has already been replaced by pieces of itself
+     */
+    private Classification walk(IAtomContainer mol, int from, int depth, RuleContext parent) {
+        RuleContext ctx = new RuleContext(mol, parent);
         StringJoiner trace = new StringJoiner(",");
 
-        int node = 1;
+        int node = from;
         for (int step = 0; step < MAX_STEPS; step++) {
             DecisionRule rule = rules[node - 1];
 
@@ -97,6 +111,9 @@ public abstract class DecisionTree {
                 trace.add(rule.getId() + (rule.isImplemented() ? (answer ? "Y" : "N") : "-"));
             }
 
+            List<IAtomContainer> residues = ctx.takeResidues();
+            boolean showResidues = ctx.residuesShowInTrace();
+
             int[] row = transitions[node - 1];
             int category = answer ? row[3] : row[2];
             if (category != 0) {
@@ -106,6 +123,31 @@ public abstract class DecisionTree {
             int next = answer ? row[1] : row[0];
             if (next == 0) {
                 return Classification.unclassified(trace.toString());
+            }
+
+            if (residues != null && !residues.isEmpty() && depth < MAX_RESIDUE_DEPTH) {
+                // The rule has replaced the molecule with pieces of itself. Every later question is asked of
+                // each piece in turn, and the last piece to reach a category decides, as in the original.
+                Classification last = null;
+                StringBuilder tail = new StringBuilder();
+                for (IAtomContainer residue : residues) {
+                    Classification sub = walk(residue, next, depth + 1, ctx.parentOrSelf());
+                    if (showResidues) {
+                        // The original sets these off in brackets, with no comma before them.
+                        tail.append('(').append(sub.trace()).append(')');
+                    } else {
+                        if (tail.length() > 0) {
+                            tail.append(',');
+                        }
+                        tail.append(sub.trace());
+                    }
+                    last = sub;
+                }
+                String whole = showResidues ? trace + tail.toString() : trace + "," + tail;
+                if (last == null) {
+                    return Classification.unclassified(trace.toString());
+                }
+                return new Classification(last.categoryIndex(), last.categoryName(), whole, last.error());
             }
             node = next;
         }

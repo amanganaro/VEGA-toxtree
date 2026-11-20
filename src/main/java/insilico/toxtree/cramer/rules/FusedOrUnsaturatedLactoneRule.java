@@ -13,6 +13,7 @@
  */
 package insilico.toxtree.cramer.rules;
 
+import insilico.toxtree.chem.Detachment;
 import insilico.toxtree.chem.Smarts;
 import insilico.toxtree.core.AbstractRule;
 import insilico.toxtree.core.RuleContext;
@@ -38,6 +39,7 @@ public final class FusedOrUnsaturatedLactoneRule extends AbstractRule {
     private static final String UNSATURATED_LACTONE = "[#6]=@[#6]@[#6](-@[#8]@[#6])=!@[#8]";
 
     private static final int CARBONYL_CARBON = 1;
+    private static final int RING_CARBON = 3;
     private static final int RING_OXYGEN = 2;
 
     public FusedOrUnsaturatedLactoneRule() {
@@ -50,6 +52,11 @@ public final class FusedOrUnsaturatedLactoneRule extends AbstractRule {
         if (!Smarts.matches(target, LACTONE)) {
             return false;
         }
+
+        // Whatever the answer, a lactone is opened and the rest of the tree judges the hydroxy acid. The
+        // original does this before it returns, so it applies to a no as much as to a yes, and it is why a
+        // plain butyrolactone ends up in the low class: the acid it opens into is an open chain.
+        ctx.setResidues(Detachment.detach(target, LACTONE, RING_CARBON, RING_OXYGEN), false);
 
         IRingSet rings = ctx.explicitFlags().getRingSet();
         if (rings.getAtomContainerCount() == 1) {

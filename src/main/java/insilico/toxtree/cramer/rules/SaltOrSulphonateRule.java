@@ -13,6 +13,7 @@
  */
 package insilico.toxtree.cramer.rules;
 
+import insilico.toxtree.chem.Detachment;
 import insilico.toxtree.chem.FunctionalGroup;
 import insilico.toxtree.chem.GroupAllocation;
 import insilico.toxtree.core.AbstractRule;
@@ -80,8 +81,15 @@ public final class SaltOrSulphonateRule extends AbstractRule {
                 return false;
             }
         }
+
+        // "Treat as the free acid, amine, unsulphonated or unsulphated compound": the group comes off and the
+        // rest of the tree judges what is left.
+        ctx.setResidues(Detachment.detach(target, SULPHONATE_FOR_DETACHMENT, 0, 1), true);
         return true;
     }
+
+    /** The sulphonate, written so that its first atom is where it attaches to the rest. */
+    private static final String SULPHONATE_FOR_DETACHMENT = "[!#8;!#1;!#7]-[#16](=[#8])(=[#8])-[#8]";
 
     private static boolean isDivalent(IAtomContainer mol, IAtom atom) {
         double order = 0;

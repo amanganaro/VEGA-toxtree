@@ -19,6 +19,7 @@ import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -37,15 +38,64 @@ public final class RuleContext {
     private IAtomContainer explicitHydrogens;
     private MolFlags explicitFlags;
     private IAtomContainer kekule;
+    private List<IAtomContainer> residues;
+    private boolean residuesShowInTrace;
+
+    private final RuleContext parent;
 
     public RuleContext(IAtomContainer mol) {
+        this(mol, null);
+    }
+
+    /**
+     * @param parent the molecule this one is a piece of, when a rule has replaced the molecule with its
+     *               residues; null for the molecule the caller asked about
+     */
+    public RuleContext(IAtomContainer mol, RuleContext parent) {
         this.molecule = mol;
+        this.parent = parent;
         this.flags = Preprocessing.analyse(mol);
+    }
+
+    /**
+     * The molecule a question should be asked of when it is one of the questions that look past a residue to
+     * the substance it came from. Questions 24 and 33 of Cramer do: a sulphonate is detached before them, and
+     * they are the two that still need to see it.
+     */
+    public RuleContext parentOrSelf() {
+        return parent == null ? this : parent;
     }
 
     /** The structural flags of the molecule. */
     public MolFlags flags() {
         return flags;
+    }
+
+    /**
+     * Hands the tree the pieces the molecule should be judged by from here on.
+     * <p>
+     * Two Cramer questions do this. Question 4 takes a salt apart and says to carry on with the free acid or
+     * amine; question 9 opens a lactone and says to carry on with the hydroxy acid, whatever answer it gave.
+     * The tree then asks every later question of each piece instead of the whole.
+     *
+     * @param residues       the pieces, or null to leave the molecule as it is
+     * @param showInTrace    whether the continuation is marked off in the decision trace, as the original marks
+     *                       off the pieces of question 4 but not those of question 9
+     */
+    public void setResidues(List<IAtomContainer> residues, boolean showInTrace) {
+        this.residues = residues;
+        this.residuesShowInTrace = showInTrace;
+    }
+
+    /** The pieces set by the rule that has just run, if any; reading them clears them. */
+    public List<IAtomContainer> takeResidues() {
+        List<IAtomContainer> taken = residues;
+        residues = null;
+        return taken;
+    }
+
+    public boolean residuesShowInTrace() {
+        return residuesShowInTrace;
     }
 
     /**

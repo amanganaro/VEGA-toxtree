@@ -55,10 +55,9 @@ distingue a colpo d'occhio da uno che risponde male.
 | Albero | Domande fatte | Concordanza con Toxtree |
 |---|---|---|
 | Verhaar | **34 su 34** | **100%**: 586 molecole su 586, traccia e categoria identiche |
-| Cramer | **39 su 39** | **categoria identica su tutte le 584 molecole**; traccia identica su 576 (98,6%) |
+| Cramer | **39 su 39** | dataset golden: categoria identica su tutte e 584; training set di logP: 9927 su 9937 (99,9%) |
 
-Entrambi gli alberi sono completi. Le 8 tracce che differiscono riguardano 4 molecole, per due motivi soli,
-descritti sotto: i residui e un carbonio impossibile.
+Entrambi gli alberi sono completi.
 
 ## Verifica
 
@@ -124,10 +123,12 @@ scritti, perché sembrano errori e in parte lo sono:
 
 ## Due differenze note rispetto a Toxtree
 
-- **Residui.** Quando la domanda 4 di Cramer risponde sì, Toxtree stacca il gruppo e pone tutte le domande
-  successive al residuo, non alla molecola intera; la sua traccia lo segna con delle parentesi. Il porting
-  continua a interrogare la molecola intera. Riguarda 7 tracce su 584 e **non cambia nessuna classificazione**,
-  perché le categorie coincidono comunque.
+- **I residui sono implementati**, ma non tutto di loro si riproduce. Quando la domanda 4 stacca un solfonato, o
+  la domanda 9 apre un lattone, Toxtree riempie i legami spezzati contando `valenza − vicini`, e il conto non
+  torna: dal benzensolfonato esce un benzene con **sette** idrogeni. Su quel benzene la percezione
+  dell'aromaticità fallisce, e le domande successive rispondono di conseguenza. Il porting riproduce il conteggio
+  e quindi quasi sempre anche il verdetto, ma su qualche sistema condensato i due rilevatori di aromaticità non
+  si accordano su una molecola impossibile. È la causa di parte delle 10 differenze rimaste su 9937.
 - **Un carbonio impossibile.** `C(C)(C)(C)(C)C`, con cinque carboni attaccati, fa fallire l'atom typing del CDK
   vecchio e Toxtree ne conta male gli idrogeni; CDK 2.3 lo tipizza senza storcere il naso. È l'unica differenza
   non dovuta ai residui.

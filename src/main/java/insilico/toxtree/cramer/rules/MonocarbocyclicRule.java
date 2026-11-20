@@ -63,7 +63,9 @@ public final class MonocarbocyclicRule extends AbstractRule {
 
     @Override
     public boolean verify(IAtomContainer mol, RuleContext ctx) {
-        IRingSet rings = ctx.explicitFlags().getRingSet();
+        // Asked of the substance, not of the piece, as question 33 is.
+        RuleContext source = ctx.parentOrSelf();
+        IRingSet rings = source.explicitFlags().getRingSet();
         if (rings.getAtomContainerCount() != 1) {
             return false;
         }
@@ -77,7 +79,7 @@ public final class MonocarbocyclicRule extends AbstractRule {
             }
         }
 
-        IAtomContainer target = ctx.withExplicitHydrogens();
+        IAtomContainer target = source.withExplicitHydrogens();
         GroupAllocation allocation = GroupAllocation.of(target, ALLOWED_GROUPS);
         if (allocation.onlyTheseGroups(target, ALLOWED)) {
             return true;

@@ -43,7 +43,9 @@ public final class SulphonateGroupsRule extends AbstractRule {
 
     @Override
     public boolean verify(IAtomContainer mol, RuleContext ctx) {
-        IAtomContainer target = ctx.kekule();
+        // Asked of the substance, not of the piece: the sulphonate this question is about has already
+        // been detached by question 4.
+        IAtomContainer target = ctx.parentOrSelf().kekule();
         if (!Smarts.matchesAny(target, SULPHONATE, SULPHAMATE)) {
             return false;
         }

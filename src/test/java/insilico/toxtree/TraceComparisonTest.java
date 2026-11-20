@@ -117,12 +117,17 @@ class TraceComparisonTest {
             Map<String, String> actual = answersOf(result.trace());
             for (Map.Entry<String, String> entry : expected.entrySet()) {
                 String got = actual.get(entry.getKey());
-                if (got == null || "-".equals(got)) {
+                if ("-".equals(got)) {
                     continue;
                 }
                 int[] counts = perRule.computeIfAbsent(entry.getKey(), k -> new int[2]);
                 counts[1]++;
-                if (got.equals(entry.getValue())) {
+                if (got == null) {
+                    // The port never reached this question, having left the path earlier. Counting it as
+                    // agreement would hide exactly the differences that matter most.
+                    disagreements.computeIfAbsent(entry.getKey(), k -> new ArrayList<>())
+                            .add(reference.smiles() + "  (expected " + entry.getValue() + ", never reached)");
+                } else if (got.equals(entry.getValue())) {
                     counts[0]++;
                 } else {
                     disagreements.computeIfAbsent(entry.getKey(), k -> new ArrayList<>())
