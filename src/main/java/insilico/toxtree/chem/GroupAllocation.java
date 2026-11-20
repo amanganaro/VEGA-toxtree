@@ -22,7 +22,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.IdentityHashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.List;
 import java.util.Set;
 
@@ -42,10 +44,20 @@ public final class GroupAllocation {
 
     private final IAtomContainer molecule;
     private final List<Set<String>> marksByAtom;
+    private final Map<String, Integer> counts;
 
-    private GroupAllocation(IAtomContainer molecule, List<Set<String>> marksByAtom) {
+    private GroupAllocation(IAtomContainer molecule, List<Set<String>> marksByAtom, Map<String, Integer> counts) {
         this.molecule = molecule;
         this.marksByAtom = marksByAtom;
+        this.counts = counts;
+    }
+
+    /**
+     * How many times a group was found, counting only the matches that were kept. Several rules are phrased as
+     * "at least three hydroxyls" or "not more than one ketone", and this is the count they mean.
+     */
+    public int count(String id) {
+        return counts.getOrDefault(id, 0);
     }
 
     /** Matches every group against the molecule and records what each atom was allocated to. */
@@ -55,6 +67,7 @@ public final class GroupAllocation {
         for (int i = 0; i < count; i++) {
             marks.add(null);
         }
+        Map<String, Integer> counts = new LinkedHashMap<>();
         for (FunctionalGroup group : groups) {
             Set<IBond> taken = Collections.newSetFromMap(new IdentityHashMap<>());
             for (int[] match : Smarts.of(group.smarts()).matchAll(mol).uniqueAtoms()) {
@@ -63,18 +76,21 @@ public final class GroupAllocation {
                 // ring carbon" share ring bonds, so only the first survives and the other halogens are left
                 // unaccounted for, which is why Toxtree rejects that molecule. On a trichloromethyl group the
                 // three matches of "halogen" share the carbon but no bond, so all three are kept.
-                List<IBond> bonds = inducedBonds(mol, match);
-                boolean overlaps = false;
-                for (IBond bond : bonds) {
-                    if (taken.contains(bond)) {
-                        overlaps = true;
-                        break;
+                if (!group.allowOverlap()) {
+                    List<IBond> bonds = inducedBonds(mol, match);
+                    boolean overlaps = false;
+                    for (IBond bond : bonds) {
+                        if (taken.contains(bond)) {
+                            overlaps = true;
+                            break;
+                        }
                     }
+                    if (overlaps) {
+                        continue;
+                    }
+                    taken.addAll(bonds);
                 }
-                if (overlaps) {
-                    continue;
-                }
-                taken.addAll(bonds);
+                counts.merge(group.id(), 1, Integer::sum);
                 for (int position = 0; position < match.length; position++) {
                     if (group.isUnmarked(position)) {
                         continue;
@@ -89,7 +105,7 @@ public final class GroupAllocation {
                 }
             }
         }
-        return new GroupAllocation(mol, marks);
+        return new GroupAllocation(mol, marks, counts);
     }
 
     /** The bonds of the molecule that run between two atoms of the same match. */

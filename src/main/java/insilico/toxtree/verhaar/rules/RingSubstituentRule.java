@@ -60,9 +60,9 @@ public class RingSubstituentRule extends AbstractRule {
     private static final String MAIN = "main";
 
     private static final FunctionalGroup NITRO_CHARGED =
-            new FunctionalGroup(NITRO, "[!#1]-[N+](=[#8])-[#8-]");
+            FunctionalGroup.of(NITRO, "[!#1]-[N+](=[#8])-[#8-]");
     private static final FunctionalGroup NITRO_NEUTRAL =
-            new FunctionalGroup(NITRO, "[!#1]-[#7](=[#8])=[#8]");
+            FunctionalGroup.of(NITRO, "[!#1]-[#7](=[#8])=[#8]");
 
     /** A benzene ring carrying a hydroxyl. */
     public static final String PHENOL = "[#6]1:[#6]:[#6]:[#6]:[#6]:[#6]:1-[#8]-[#1]";
@@ -94,11 +94,11 @@ public class RingSubstituentRule extends AbstractRule {
 
         groups.add(NITRO_CHARGED);
         groups.add(NITRO_NEUTRAL);
-        groups.add(new FunctionalGroup(HALOGEN, "[*]~[" + halogens + "]"));
+        groups.add(FunctionalGroup.of(HALOGEN, "[*]~[" + halogens + "]"));
         allowedIds.add(NITRO);
         allowedIds.add(HALOGEN);
         if (mainStructure != null) {
-            groups.add(new FunctionalGroup(MAIN, mainStructure));
+            groups.add(FunctionalGroup.of(MAIN, mainStructure));
             allowedIds.add(MAIN);
         }
     }

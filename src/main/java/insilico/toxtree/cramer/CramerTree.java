@@ -18,8 +18,10 @@ import insilico.toxtree.core.DecisionRule;
 import insilico.toxtree.core.DecisionTree;
 import insilico.toxtree.core.FlagRule;
 import insilico.toxtree.core.UnimplementedRule;
+import insilico.toxtree.cramer.rules.CommonTerpeneRule;
 import insilico.toxtree.cramer.rules.ElementsOtherThanRule;
 import insilico.toxtree.cramer.rules.RingRules;
+import insilico.toxtree.cramer.rules.SimplyBranchedOrCarbohydrateRule;
 import insilico.toxtree.cramer.rules.StructureListRule;
 import insilico.toxtree.cramer.rules.ToxicFunctionalGroupsRule;
 
@@ -96,7 +98,7 @@ public final class CramerTree extends DecisionTree {
                 new ToxicFunctionalGroupsRule(),
                 new ElementsOtherThanRule(),
                 new UnimplementedRule("4", "Contains only salts, sulphonates or sulphates"),
-                new UnimplementedRule("5", "Simply branched aliphatic hydrocarbon"),
+                new SimplyBranchedOrCarbohydrateRule(),
                 new UnimplementedRule("6", "Common benzene derivative"),
                 new FlagRule("7", "Heterocyclic", MolFlags::isHeterocyclic),
                 new UnimplementedRule("8", "Lactone or cyclic diester"),
@@ -107,7 +109,7 @@ public final class CramerTree extends DecisionTree {
                 RingRules.ringsHaveSubstituents("13", "Ring with substituents"),
                 RingRules.manyAromaticRings("14"),
                 new UnimplementedRule("15", "Readily hydrolysed to a mononuclear residue"),
-                new UnimplementedRule("16", "Common terpene"),
+                new CommonTerpeneRule("16"),
                 new UnimplementedRule("17", "Readily hydrolysed to a common terpene"),
                 new UnimplementedRule("18", "Ketone, alcohol, acid or ester"),
                 new FlagRule("19", "Open chain", MolFlags::isOpenChain),
@@ -129,7 +131,7 @@ public final class CramerTree extends DecisionTree {
                 new FlagRule("35", "Heterocyclic", MolFlags::isHeterocyclic),
                 new FlagRule("36", "Aromatic", MolFlags::isAromatic),
                 new FlagRule("37", "Heterocyclic", MolFlags::isHeterocyclic),
-                new UnimplementedRule("38", "Common terpene"),
+                new CommonTerpeneRule("38"),
                 new FlagRule("39", "Aromatic", MolFlags::isAromatic),
         };
     }

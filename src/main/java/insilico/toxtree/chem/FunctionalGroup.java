@@ -27,12 +27,28 @@ import java.util.Arrays;
  * @param smarts   the pattern
  * @param unmarked positions in the pattern, counted from zero, that do not belong to the group
  */
-public record FunctionalGroup(String id, String smarts, int... unmarked) {
+public record FunctionalGroup(String id, String smarts, boolean allowOverlap, int[] unmarked) {
 
     public FunctionalGroup {
         Smarts.of(smarts);
         unmarked = unmarked.clone();
         Arrays.sort(unmarked);
+    }
+
+    /**
+     * A group whose matches may not overlap: once a bond has been claimed, a further match that would reuse it
+     * is dropped. This is how Toxtree allocates most groups.
+     */
+    public static FunctionalGroup of(String id, String smarts, int... unmarked) {
+        return new FunctionalGroup(id, smarts, false, unmarked);
+    }
+
+    /**
+     * A group whose matches may overlap freely, so that every occurrence is allocated. Toxtree uses this where
+     * it counts occurrences rather than carving the molecule up, as when it looks for isoprene units.
+     */
+    public static FunctionalGroup overlapping(String id, String smarts, int... unmarked) {
+        return new FunctionalGroup(id, smarts, true, unmarked);
     }
 
     /** True when the atom at this position in the pattern is only context and must not be marked. */

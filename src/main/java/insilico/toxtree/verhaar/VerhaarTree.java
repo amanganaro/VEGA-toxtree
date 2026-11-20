@@ -150,8 +150,8 @@ public final class VerhaarTree extends DecisionTree {
                         ctx -> ctx.flags().isAliphatic(), List.of(
                         // A nitrogen with two non-ring carbons and a hydrogen, or with three non-hydrogen
                         // neighbours.
-                        new FunctionalGroup("amine", "[#6]-!@[#7](-!@[#6])-[#1]"),
-                        new FunctionalGroup("amine", "[!#1]-[#7](-[!#1])-[!#1]"))),
+                        FunctionalGroup.of("amine", "[#6]-!@[#7](-!@[#6])-[#1]"),
+                        FunctionalGroup.of("amine", "[!#1]-[#7](-[!#1])-[!#1]"))),
                 elements("1.7", "Contain only C,H,O and halogen", ElementsRule.Mode.EXACTLY,
                         "C", "H", "O", "Cl", "Br", "I", "F"),
                 new Rule171(rule151, rule152, rule153, rule154),
@@ -251,7 +251,7 @@ public final class VerhaarTree extends DecisionTree {
     private static List<FunctionalGroup> ringSubstitutedHalogens() {
         List<FunctionalGroup> groups = new ArrayList<>();
         for (String halogen : new String[]{"Cl", "Br", "F", "I"}) {
-            groups.add(new FunctionalGroup("ringSubstituted" + halogen,
+            groups.add(FunctionalGroup.of("ringSubstituted" + halogen,
                     "[*]@[#6](@[*])!@[" + halogen + "]", 0, 2));
         }
         return groups;

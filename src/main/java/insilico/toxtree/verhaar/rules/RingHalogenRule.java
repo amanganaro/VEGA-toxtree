@@ -35,7 +35,7 @@ public class RingHalogenRule extends AbstractRule {
 
     private static final String HALOGEN = "halogen";
     private static final List<FunctionalGroup> GROUPS =
-            List.of(new FunctionalGroup(HALOGEN, "[*]~[F,Cl,Br,I]"));
+            List.of(FunctionalGroup.of(HALOGEN, "[*]~[F,Cl,Br,I]"));
     private static final List<String> ALLOWED = List.of(HALOGEN);
 
     private final boolean polycyclic;
