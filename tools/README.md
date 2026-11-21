@@ -1,10 +1,9 @@
-# Strumenti di verifica contro il ToxTree originale
+# Verification tools against the original ToxTree
 
-Due programmi che servono a controllare il porting, non a farlo girare. Non fanno parte della libreria e non
-vengono compilati con essa: hanno bisogno del vecchio `ToxTreeWrapper`, cioè proprio di quello che il porting
-elimina.
+Two programs used to check the port, not to run it. They are not part of the library and are not compiled with it:
+they need the old `ToxTreeWrapper`, which is exactly what the port removes.
 
-Per usarli serve un progetto Maven a parte con queste dipendenze:
+To use them you need a separate Maven project with these dependencies:
 
 ```xml
 <dependency><groupId>InSilico</groupId><artifactId>ToxTreeWrapper</artifactId>
@@ -15,50 +14,49 @@ Per usarli serve un progetto Maven a parte con queste dipendenze:
 <dependency><groupId>InSilico</groupId><artifactId>ToxTreeRules</artifactId><version>0.1-SNAPSHOT</version></dependency>
 ```
 
-più il repository `https://nexus.ideaconsult.net/content/repositories/releases` per toxtree-cramer.
+plus the repository `https://nexus.ideaconsult.net/content/repositories/releases` for toxtree-cramer.
 
 ## ThreeWay
 
-Genera i file di riferimento che stanno in `src/test/resources/reference`. Per ogni SMILES normalizza la molecola
-con il core di VEGA, ne prende lo SMILES canonico, lo riparsa con il CDK 1.5.13 — cioè fa esattamente quello che
-facevano i modelli vecchi — e salva categoria e traccia di decisione.
+Generates the reference files in `src/test/resources/reference`. For each SMILES it normalises the molecule with
+the VEGA core, takes its canonical SMILES, parses it again with CDK 1.5.13 — exactly what the old models did — and
+saves the category and the decision trace.
 
 ```
-java -cp ... ThreeWay cramer smiles.txt cramer-riferimento.tsv
-java -cp ... ThreeWay verhaar smiles.txt verhaar-riferimento.tsv
+java -cp ... ThreeWay cramer smiles.txt cramer-reference.tsv
+java -cp ... ThreeWay verhaar smiles.txt verhaar-reference.tsv
 ```
 
-Serve anche a stabilire da che parte sta una differenza: se ToxTree di oggi concorda con un'uscita di VEGA
-pubblicata, allora la differenza è del porting e non del core.
+It also tells which side a difference is on: if today's ToxTree agrees with a published VEGA output, the difference
+belongs to the port and not to the core.
 
 ## VerifyGroups
 
-Confronta **ogni gruppo funzionale**, atomo per atomo, con quello che ToxTree costruisce. Entrambe le parti
-ricevono lo stesso SMILES canonico, così gli atomi pesanti hanno le stesse posizioni, e per ogni molecola si
-confrontano i due insiemi di atomi toccati.
+Compares **every functional group**, atom by atom, with what ToxTree builds. Both sides receive the same canonical
+SMILES, so the heavy atoms have the same positions, and for each molecule the two sets of matched atoms are
+compared.
 
 ```
-java -cp ... VerifyGroups smiles.txt [quante]
+java -cp ... VerifyGroups smiles.txt [count]
 ```
 
-Per ogni gruppo stampa su quante molecole l'insieme coincide con la vista aromatica, con quella di Kekulé, su
-nessuna delle due, e se almeno la presenza del gruppo coincide. Serve perché un test sulle classificazioni finali
-non vede un gruppo sbagliato finché non capita la molecola che lo mette in crisi: questo lo vede subito.
+For each group it prints on how many molecules the set matches on the aromatic view, on the Kekulé view, on
+neither, and whether at least the presence of the group matches. It is needed because a test on the final
+classifications does not see a wrong group until the molecule that exposes it comes along: this one sees it at once.
 
-Due cose da sapere leggendo l'uscita:
+Two things to know when reading the output:
 
-- **Un gruppo con un solo legame non è confrontabile per insiemi di atomi.** Il metodo di CDK che restituisce le
-  mappature non le produce per query così piccole, quindi la colonna "nessuna delle due" si riempie mentre la
-  colonna della presenza resta a posto. È il caso di `halogen`.
-- **`ionicGroup` non è confrontabile affatto:** si basa su legami virtuali che ToxTree aggiunge fra frammenti
-  carichi, e che in SMARTS non esistono.
+- **A single-bond group cannot be compared by atom sets.** The CDK method that returns the mappings does not produce
+  them for such small queries, so the "neither" column fills up while the presence column stays correct. This is the
+  case of `halogen`.
+- **`ionicGroup` cannot be compared at all:** it relies on virtual bonds that ToxTree adds between charged
+  fragments, and that do not exist in SMARTS.
 
-## Com'è andata l'ultima volta
+## Last run
 
-Su 66 gruppi, 50 coincidono esattamente su entrambe le viste e 11 soltanto sulla vista di Kekulé — cioè sono
-gruppi definiti sull'ordine dei legami, che ToxTree legge senza badare all'aromaticità, e le regole che li usano
-devono passare da `RuleContext.kekule()`.
+Of 66 groups, 50 match exactly on both views and 11 only on the Kekulé view — that is, groups defined on bond order,
+which ToxTree reads regardless of aromaticity, and the rules that use them must go through `RuleContext.kekule()`.
 
-Restano tre segnalazioni, tutte senza effetto su nessuna classificazione: `halogen` e `ionicGroup` per i motivi
-sopra, e `esterOfalcoholSecondaryAttachedToTerminalVinyl`, dove su 3 molecole grandi su 9938 il porting trova una
-corrispondenza che ToxTree non trova.
+Three warnings remain, none with any effect on a classification: `halogen` and `ionicGroup` for the reasons above,
+and `esterOfalcoholSecondaryAttachedToTerminalVinyl`, where on 3 large molecules out of 9938 the port finds a match
+that ToxTree does not.

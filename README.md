@@ -1,12 +1,12 @@
 # VEGA - ToxTree rules
 
-Le regole decisionali di **Cramer** e **Verhaar**, portate su CDK 2.x.
+The **Cramer** and **Verhaar** decision rules, ported to CDK 2.x.
 
-Sostituiscono `ToxTreeWrapper` (72 MB) e `toxtree-cramer`, e con essi ambit, CDK 1.5.13, beam 0.9.1 e il Nexus di
-IdeaConsult. I modelli VEGA `CramerToxTree` e `VerhaarToxtree` dipendono da questo artefatto e non contengono
-nessuna logica: si limitano a far girare l'albero.
+They replace `ToxTreeWrapper` (72 MB) and `toxtree-cramer`, and with them ambit, CDK 1.5.13, beam 0.9.1 and the
+IdeaConsult Nexus. The VEGA models `CramerToxTree` and `VerhaarToxtree` depend on this artifact and contain no logic
+of their own: they only run the tree.
 
-## Come si usa
+## Usage
 
 ```java
 VerhaarTree tree = new VerhaarTree();
@@ -17,129 +17,125 @@ result.trace();          // "0.1Y,0.2Y,0.3Y,1.1Y,1.2Y,1.3Y"
 result.isClassified();
 ```
 
-**La molecola deve arrivare già normalizzata.** La libreria non legge SMILES, non aggiunge idrogeni e non percepisce
-l'aromaticità: usa quello che riceve. Questo è voluto, ed è la differenza con l'originale, che faceva il
-preprocessing per conto suo. Nei modelli VEGA la normalizzazione è quella di `InsilicoMolecule`.
+**The molecule must arrive already normalised.** The library does not read SMILES, does not add hydrogens and does
+not perceive aromaticity: it uses what it receives. This is deliberate, and it is the difference from the original,
+which did its own preprocessing. In the VEGA models the normalisation is the one of `InsilicoMolecule`.
 
-L'unica dipendenza è CDK, in scope `provided`: la versione la decide chi usa la libreria, che nel caso di VEGA è il
-core.
+The only dependency is CDK, in `provided` scope: its version is chosen by whoever uses the library, which in VEGA is
+the core.
 
-## Struttura
+## Structure
 
-| Package | Contenuto |
+| Package | Content |
 |---|---|
-| `insilico.toxtree.core` | impalcatura comune: `DecisionTree`, `DecisionRule`, `RuleContext`, `Classification` e le classi base delle regole |
-| `insilico.toxtree.chem` | chimica condivisa: flag strutturali, SMARTS compilati, insiemi di elementi |
-| `insilico.toxtree.verhaar` | lo schema Verhaar e le sue regole |
-| `insilico.toxtree.cramer` | lo schema Cramer e le sue regole |
+| `insilico.toxtree.core` | shared scaffolding: `DecisionTree`, `DecisionRule`, `RuleContext`, `Classification` and the rule base classes |
+| `insilico.toxtree.chem` | shared chemistry: structural flags, compiled SMARTS, element sets |
+| `insilico.toxtree.verhaar` | the Verhaar scheme and its rules |
+| `insilico.toxtree.cramer` | the Cramer scheme and its rules |
 
-Ogni albero è dichiarativo, come nell'originale: un elenco di regole e una tabella di transizioni
-`{ seNo, seSi, assegnaSeNo, assegnaSeSi }`. Le regole sono senza stato; tutto ciò che dipende dalla molecola sta nel
-`RuleContext`, così la libreria si può usare da più thread, cosa che l'originale non permetteva.
+Each tree is declarative, as in the original: a list of rules and a transition table
+`{ nextIfNo, nextIfYes, categoryIfNo, categoryIfYes }`. Rules are stateless; everything that depends on the molecule
+lives in the `RuleContext`, so the library can be used from several threads, which the original did not allow.
 
-## La traccia di decisione
+## The decision trace
 
-Oltre alla categoria, ogni classificazione restituisce il percorso seguito nell'albero, nello stesso formato di
+Besides the category, every classification returns the path followed through the tree, in the same format as
 Toxtree:
 
 ```
 1N,2N,3N,5N,6N,7N,16N,17N,19Y,20Y,21N,18N
 ```
 
-È il motivo per cui il porting è verificabile: due implementazioni si confrontano regola per regola, non solo sul
-risultato finale. Una regola non ancora scritta compare come `-` invece di `N`, così un albero incompleto si
-distingue a colpo d'occhio da uno che risponde male.
+This is what makes the port verifiable: two implementations are compared rule by rule, not only on the final
+result. A rule not yet written shows up as `-` instead of `N`, so an incomplete tree is told apart at a glance from
+one that answers wrongly.
 
-## Stato
+## Status
 
-| Albero | Domande fatte | Concordanza con Toxtree |
+| Tree | Questions implemented | Agreement with Toxtree |
 |---|---|---|
-| Verhaar | **34 su 34** | **100%**: 586 molecole su 586, traccia e categoria identiche |
-| Cramer | **39 su 39** | dataset golden: categoria identica su tutte e 584; training set di logP: 9927 su 9937 (99,9%) |
+| Verhaar | **34 of 34** | **100%**: 586 molecules out of 586, identical trace and category |
+| Cramer | **39 of 39** | golden dataset: identical category on all 584; logP training set: 9927 out of 9937 (99.9%) |
 
-Entrambi gli alberi sono completi.
+Both trees are complete.
 
-## Verifica
+## Verification
 
-`TraceComparisonTest` confronta questo porting con le tracce catturate dal Toxtree originale sulle 603 molecole del
-dataset golden di VEGA, e stampa la concordanza di ogni singola regola più le molecole su cui le due implementazioni
-divergono.
+`TraceComparisonTest` compares this port with the traces captured from the original Toxtree on the 603 molecules of
+the VEGA golden dataset, and prints the agreement of every single rule plus the molecules on which the two
+implementations diverge.
 
-I file di riferimento stanno in `src/test/resources/reference`:
+The reference files are in `src/test/resources/reference`:
 
-| File | Molecole | Origine |
+| File | Molecules | Source |
 |---|---|---|
-| `cramer-core.tsv`, `verhaar-core.tsv` | 603 | dataset golden di VEGA |
-| `verhaar-2000.tsv` | 121 | dati di validazione di Toxtree, Verhaar et al. 2000 |
-| `cramer-logp.tsv`, `verhaar-logp.tsv` | 9961 | training set di logP, fatto girare con VEGA 1.2.4 |
+| `cramer-core.tsv`, `verhaar-core.tsv` | 603 | VEGA golden dataset |
+| `verhaar-2000.tsv` | 121 | Toxtree validation data, Verhaar et al. 2000 |
+| `cramer-logp.tsv`, `verhaar-logp.tsv` | 9961 | logP training set, run through VEGA 1.2.4 |
 
-Si rigenerano con gli strumenti in [`tools/`](tools/README.md), l'unico punto in cui serve ancora il wrapper
-vecchio e il Nexus di IdeaConsult.
+They are regenerated with the tools in [`tools/`](tools/README.md), the only place that still needs the old wrapper
+and the IdeaConsult Nexus.
 
-### La verifica gruppo per gruppo
+### Group-by-group verification
 
-Il confronto delle tracce dice se una regola risponde come deve, ma non vede un gruppo funzionale scritto male
-finché non capita la molecola che lo mette in crisi. Per questo c'è `tools/VerifyGroups`, che confronta **ogni
-gruppo, atomo per atomo**, con quello che Toxtree costruisce: stessa molecola, stessi atomi toccati.
+The trace comparison tells whether a rule answers as it should, but it does not see a badly written functional
+group until the molecule that exposes it comes along. That is why there is `tools/VerifyGroups`, which compares
+**every group, atom by atom**, with what Toxtree builds: same molecule, same atoms matched.
 
-Su 66 gruppi, 50 coincidono esattamente e 11 coincidono sulla vista di Kekulé, cioè sono definiti sull'ordine dei
-legami. Le tre segnalazioni che restano non hanno effetto su nessuna classificazione e sono spiegate in
-`tools/README.md`.
+Of 66 groups, 50 match exactly and 11 match on the Kekulé view, i.e. they are defined on bond order. The three
+remaining warnings have no effect on any classification and are explained in `tools/README.md`.
 
-## Particolarità dell'originale, riprodotte apposta
+## Quirks of the original, reproduced on purpose
 
-Il porting riproduce il comportamento attuale, non quello che ci si aspetterebbe. Questi punti meritano di essere
-scritti, perché sembrano errori e in parte lo sono:
+The port reproduces the current behaviour, not the one you would expect. These points are worth writing down,
+because they look like bugs and partly are:
 
-- **Le domande 6 e 30 di Cramer non possono mai rispondere sì.** Entrambe chiedono a Toxtree di considerare solo
-  gli anelli aromatici, e la selezione non ne trova mai uno: il flag aromatico viene memorizzato come se fosse una
-  maschera di bit e poi confrontato con le posizioni dei flag degli anelli. L'anetolo e l'estragolo, un alcossile
-  in para a una catena idrocarburica, sono esattamente ciò che la domanda 6 descrive, e Toxtree risponde no a
-  entrambi; così la benzammide e il fenil isocianato alla domanda 30. La logica prevista resta nel codice, dietro
-  un interruttore in ciascuna classe.
-- **La domanda 3 decide la divalenza dello zolfo in due modi diversi** a seconda della molecola: chiede la valenza
-  a CDK, che per uno zolfo aromatico dà 2, ma ripiega su una somma degli ordini di legame, dove lo zolfo aromatico
-  fa 3, appena incontra uno zolfo non divalente. Quale percorso giri lo decide la molecola intera, non l'atomo.
-- **I carboni di Toxtree non sono carboni qualsiasi:** molti gruppi richiedono un carbonio che porti almeno un
-  idrogeno, oppure nessuno e solo vicini carboni. Il carbonio carbonilico di un'ammide non qualifica, e quindi un
-  azoto ureico non è un'ammina secondaria alifatica.
-- **Le query sui legami guardano solo l'ordine e ignorano l'aromaticità**, cosa che SMARTS non permette: per questo
-  i gruppi definiti sull'ordine girano su una vista di Kekulé con i flag aromatici azzerati. È così che il
-  piridinio risulta avere un azoto quaternario e lo zolfo del tiofene un solfuro.
-- **I match sovrapposti di uno stesso gruppo si scartano, contandoli per legame.**
+- **Cramer questions 6 and 30 can never answer yes.** Both ask Toxtree to consider only aromatic rings, and the
+  selection never finds one: the aromatic flag is stored as if it were a bit mask and then compared with the
+  positions of the ring flags. Anethole and estragole, an alkoxy group para to a hydrocarbon chain, are exactly what
+  question 6 describes, and Toxtree answers no to both; likewise benzamide and phenyl isocyanate at question 30. The
+  intended logic is still in the code, behind a switch in each class.
+- **Question 3 decides sulphur divalence in two different ways** depending on the molecule: it asks CDK for the
+  valence, which is 2 for an aromatic sulphur, but falls back on a sum of bond orders, where aromatic sulphur counts
+  3, as soon as it meets a sulphur that is not divalent. Which path runs is decided by the whole molecule, not by
+  the atom.
+- **Toxtree carbons are not just any carbons:** many groups require a carbon bearing at least one hydrogen, or none
+  and only carbon neighbours. The carbonyl carbon of an amide does not qualify, so a urea nitrogen is not an
+  aliphatic secondary amine.
+- **Bond queries look only at the order and ignore aromaticity**, which SMARTS does not allow: that is why the groups
+  defined on bond order run on a Kekulé view with the aromatic flags cleared. This is how pyridinium turns out to
+  have a quaternary nitrogen and the sulphur of thiophene a sulphide.
+- **The main structure is never required.** Toxtree answers "yes, it is a weakly acidic phenol" for thiophene and
+  for thiirane. `RuleRingMainStrucSubstituents` assigns the main structure inside `initQuery()`, which the superclass
+  constructor calls, and then declares the field as `mainStructure = null`: in Java, field initialisers run after the
+  superclass constructor, so the assignment is wiped out before the rule is used. The query survives among the
+  allowed groups, because it was registered while the field still held it. 18 of the 603 molecules of the golden
+  dataset depend on this.
+- **No ring, no answer.** Toxtree records the ring set only if there is at least one ring, and the class 2 rules give
+  up when they receive none. An acyclic molecule therefore never satisfies them.
+- **Overlapping matches of the same group are discarded, counting by bond.** On a hexahalogenated cyclohexane the
+  matches of "halogen on a ring carbon" share ring bonds: only the first survives and the other halogens stay
+  uncovered, which is why Toxtree rejects that molecule. On a trichloromethyl group, instead, the three matches share
+  the carbon but no bond, so they all count.
 
-- **La struttura principale non viene mai richiesta.** Toxtree risponde "sì, è un fenolo debolmente acido" per il
-  tiofene e per la tiirana. `RuleRingMainStrucSubstituents` assegna la struttura principale dentro `initQuery()`,
-  che il costruttore della superclasse chiama, e poi dichiara il campo come `mainStructure = null`: in Java gli
-  inizializzatori di campo girano dopo il costruttore della superclasse, quindi l'assegnazione viene cancellata
-  prima che la regola venga usata. La query sopravvive fra i gruppi ammessi, perché era stata registrata quando il
-  campo la conteneva ancora. Da questo dipendono 18 delle 603 molecole del dataset golden.
-- **Nessun anello, nessuna risposta.** Toxtree registra l'insieme degli anelli solo se ce n'è almeno uno, e le
-  regole di classe 2 si arrendono quando non ne ricevono nessuno. Una molecola aciclica quindi non le soddisfa mai.
-- **I match sovrapposti si scartano, contandoli per legame.** Su un cicloesano esalogenato i match di "alogeno su
-  un carbonio dell'anello" condividono legami dell'anello: sopravvive solo il primo e gli altri alogeni restano
-  scoperti, e per questo Toxtree rifiuta quella molecola. Su un gruppo triclorometile invece i tre match
-  condividono il carbonio ma nessun legame, quindi valgono tutti.
+## Known differences from Toxtree
 
-## Due differenze note rispetto a Toxtree
+- **Residues are implemented**, but not everything about them can be reproduced. When question 4 detaches a
+  sulphonate, or question 9 opens a lactone, Toxtree fills the broken bonds by counting `valence − neighbours`, and
+  the count is wrong: benzenesulphonate yields a benzene with **seven** hydrogens. Aromaticity perception fails on
+  that benzene, and the following questions answer accordingly. The port reproduces the count and therefore almost
+  always the verdict too, but on some fused systems the two aromaticity detectors disagree on an impossible
+  molecule. This causes part of the 10 differences left out of 9937.
+- **An impossible carbon.** `C(C)(C)(C)(C)C`, with five carbons attached, makes the atom typing of the old CDK fail
+  and Toxtree miscounts its hydrogens; CDK 2.3 types it without complaint. It is the only difference not caused by
+  residues.
+- **Hydrogens.** Toxtree makes them all explicit; VEGA keeps them implicit. Several SMARTS depend on explicit ones
+  (`C=;!:CC(O[H])` names a hydrogen, and `[OH1]C[!$(C=C);!$(C#C)]` finds methanol only because the third atom can be
+  a hydrogen), so matching runs on a copy with explicit hydrogens, built once per molecule.
+- **Aromaticity.** Toxtree uses ambit's old Hückel detector; here the aromaticity is the one VEGA decides. This is
+  the remaining divergence, and the trace test measures it.
 
-- **I residui sono implementati**, ma non tutto di loro si riproduce. Quando la domanda 4 stacca un solfonato, o
-  la domanda 9 apre un lattone, Toxtree riempie i legami spezzati contando `valenza − vicini`, e il conto non
-  torna: dal benzensolfonato esce un benzene con **sette** idrogeni. Su quel benzene la percezione
-  dell'aromaticità fallisce, e le domande successive rispondono di conseguenza. Il porting riproduce il conteggio
-  e quindi quasi sempre anche il verdetto, ma su qualche sistema condensato i due rilevatori di aromaticità non
-  si accordano su una molecola impossibile. È la causa di parte delle 10 differenze rimaste su 9937.
-- **Un carbonio impossibile.** `C(C)(C)(C)(C)C`, con cinque carboni attaccati, fa fallire l'atom typing del CDK
-  vecchio e Toxtree ne conta male gli idrogeni; CDK 2.3 lo tipizza senza storcere il naso. È l'unica differenza
-  non dovuta ai residui.
-- **Idrogeni.** Toxtree li rende tutti espliciti; VEGA li tiene impliciti. Parecchi SMARTS dipendono da quelli
-  espliciti (`C=;!:CC(O[H])` nomina un idrogeno, e `[OH1]C[!$(C=C);!$(C#C)]` trova il metanolo solo perché il terzo
-  atomo può essere un idrogeno), quindi il matching gira su una copia con gli idrogeni espliciti, costruita una volta
-  per molecola.
-- **Aromaticità.** Toxtree usa il vecchio rilevatore di Hückel di ambit; qui arriva quella decisa da VEGA. È la
-  divergenza che resta, e si misura con il test delle tracce.
+## License
 
-## Licenza
-
-GPL v2 o successiva. Il codice deriva da [Toxtree](https://toxtree.sourceforge.net/) di Ideaconsult Ltd., rilasciato
-con quella licenza; per questo la libreria sta in un repository separato dal core VEGA, che è LGPL v3.
+GPL v2 or later. The code derives from [Toxtree](https://toxtree.sourceforge.net/) by Ideaconsult Ltd., released
+under that license; this is why the library lives in a repository separate from the VEGA core, which is LGPL v3.
